@@ -8,9 +8,10 @@ import BatchBCheckpoint from "./components/BatchBCheckpoint";
 import DriveReconciliation from "./components/DriveReconciliation";
 import GenuineGaps from "./components/GenuineGaps";
 import BirdEyeSection from "./components/BirdEyeSection";
+import BirdEyeQueryResults from "./components/BirdEyeQueryResults";
 import HeroSection from "./components/HeroSection";
 
-type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "drift" | "upstream" | "invariants" | "batch-b";
+type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("overview");
@@ -29,6 +30,7 @@ export default function App() {
     { id: "drive", label: "Drive Reconciliation", icon: "fa-folder-open" },
     { id: "gaps", label: "Genuine Gaps", icon: "fa-triangle-exclamation" },
     { id: "birdeye", label: "BirdEye MCP", icon: "fa-eye" },
+    { id: "birdeye-query", label: "BirdEye Query", icon: "fa-terminal" },
     { id: "drift", label: "Drift Recovery", icon: "fa-arrows-rotate" },
     { id: "upstream", label: "Upstream Reuse", icon: "fa-book" },
     { id: "invariants", label: "Invariants", icon: "fa-shield-halved" },
@@ -101,6 +103,10 @@ export default function App() {
 
         <section id="birdeye" className="pt-24">
           <BirdEyeSection />
+        </section>
+
+        <section id="birdeye-query" className="pt-24">
+          <BirdEyeQueryResults />
         </section>
 
         <section id="drift" className="pt-24">
