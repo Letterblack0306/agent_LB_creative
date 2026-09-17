@@ -19,13 +19,13 @@ const birdeyeProjection = {
     repository: "Letterblack0306/brew",
     workspaceRoot: "G:\\Developments\\38_Brew_Creative_Agent",
     branch: "main",
-    head: "c37205cb09e6e7cc84cf770fcc04c3e959808506",
-    observedAt: "2026-09-17T14:32:00Z",
+    head: "54673a6",
+    observedAt: "2026-09-17T16:00:00Z",
   },
   git: {
     isRepository: true,
     branch: "main",
-    head: "c37205cb09e6e7cc84cf770fcc04c3e959808506",
+    head: "54673a6",
     dirty: false,
     changedPathCount: 0,
     evidenceLevel: "PROVEN",
@@ -41,13 +41,21 @@ const birdeyeProjection = {
     evidenceLevel: "PROVEN",
   },
   alignment: {
-    state: "ALIGNED",
+    state: "DIVERGED",
     documentedSourceHead: "39da8df909e6e7cc84cf770fcc04c3e959808506",
-    observedHead: "c37205cb09e6e7cc84cf770fcc04c3e959808506",
+    observedHead: "54673a6",
     evidenceLevel: "PROVEN",
+    reason: "Workspace has advanced 2 commits past documented source_head with 8 concrete fixes",
   },
   verdict: "REVIEW",
   syncState: "LOCAL_ONLY",
+  recentActivity: {
+    latestCommit: "54673a6",
+    commitDate: "2026-09-17",
+    changes: 8,
+    filesChanged: 7,
+    branchStatus: "main = origin/main (up to date)",
+  },
 };
 
 // Plan nodes from actual plan.json
@@ -254,27 +262,37 @@ export default function BirdEyeQueryResults() {
           <div className="rounded-xl bg-white/[0.02] border border-white/10 p-5">
             <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Alignment</h3>
             <div className="flex items-center gap-4 flex-wrap">
-              <span className={`text-xs px-2 py-1 rounded border font-mono ${evidenceColors.green}`}>
-                state: ALIGNED
+              <span className={`text-xs px-2 py-1 rounded border font-mono ${evidenceColors.amber}`}>
+                state: DIVERGED
               </span>
               <span className="text-xs text-gray-400">
                 documented: <code className="text-gray-300">39da8df9...</code>
               </span>
               <span className="text-xs text-gray-400">
-                observed: <code className="text-gray-300">c37205cb...</code>
+                observed: <code className="text-emerald-300">54673a6</code>
               </span>
             </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Workspace has advanced past documented source_head with 8 concrete fixes (renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation)
+            </p>
           </div>
 
           {/* Verdict */}
           <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-5">
-            <div className="flex items-center gap-3">
-              <span className="text-xs px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono font-bold">
+            <div className="flex items-start gap-3">
+              <span className="text-xs px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono font-bold shrink-0">
                 verdict: REVIEW
               </span>
-              <span className="text-xs text-gray-400">
-                Workspace HEAD has advanced past documented source_head. Plan documents may need reconciliation.
-              </span>
+              <div className="text-xs text-gray-400">
+                <p>Workspace HEAD has advanced past documented source_head with 8 concrete fixes.</p>
+                <p className="mt-1 text-emerald-300/80">
+                  <i className="fa-solid fa-circle-check mr-1"></i>
+                  Branch status: main = origin/main (up to date) • 7 files changed • Temporary bat scripts cleaned
+                </p>
+                <p className="mt-1 text-gray-500">
+                  Plan documents may need reconciliation to reflect the new commit.
+                </p>
+              </div>
             </div>
           </div>
         </div>

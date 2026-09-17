@@ -130,7 +130,7 @@ export default function App() {
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
         <p>Brew Agent System — Plan & Implementation Features</p>
         <p className="mt-1 text-gray-600">
-          Source: Letterblack0306/GPT-Knowledge • plan.json + status.json • Drive reconciliation at c37205cb
+          Source: Letterblack0306/GPT-Knowledge • Brew main at 54673a6 (8 fixes) • Drive reconciliation + BirdEye projection
         </p>
       </footer>
     </div>
