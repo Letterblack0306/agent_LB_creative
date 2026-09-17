@@ -10,6 +10,7 @@ import GenuineGaps from "./components/GenuineGaps";
 import BirdEyeSection from "./components/BirdEyeSection";
 import BirdEyeQueryResults from "./components/BirdEyeQueryResults";
 import HeroSection from "./components/HeroSection";
+import { brewPlanMeta } from "./data/brewPlanning";
 
 type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b";
 
@@ -25,12 +26,12 @@ export default function App() {
 
   const navItems: { id: Section; label: string; icon: string }[] = [
     { id: "overview", label: "Overview", icon: "fa-compass" },
-    { id: "plan", label: "Plan Graph", icon: "fa-diagram-project" },
+    { id: "plan", label: "Specific Plan", icon: "fa-diagram-project" },
     { id: "status", label: "Verified Status", icon: "fa-circle-check" },
     { id: "drive", label: "Drive Reconciliation", icon: "fa-folder-open" },
-    { id: "gaps", label: "Genuine Gaps", icon: "fa-triangle-exclamation" },
+    { id: "gaps", label: "Gaps & Gates", icon: "fa-triangle-exclamation" },
     { id: "birdeye", label: "BirdEye MCP", icon: "fa-eye" },
-    { id: "birdeye-query", label: "BirdEye Query", icon: "fa-terminal" },
+    { id: "birdeye-query", label: "BirdEye Plan", icon: "fa-terminal" },
     { id: "drift", label: "Drift Recovery", icon: "fa-arrows-rotate" },
     { id: "upstream", label: "Upstream Reuse", icon: "fa-book" },
     { id: "invariants", label: "Invariants", icon: "fa-shield-halved" },
@@ -39,7 +40,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0a0e1a] text-gray-100 font-sans">
-      {/* Navigation */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrollY > 50
@@ -54,7 +54,7 @@ export default function App() {
                 <i className="fa-solid fa-mug-hot text-white text-sm"></i>
               </div>
               <span className="font-bold text-lg tracking-tight">
-                Brew <span className="text-purple-400">Plan & Features</span>
+                Brew <span className="text-purple-400">Plan & Evidence</span>
               </span>
             </div>
             <div className="hidden lg:flex items-center gap-1">
@@ -80,53 +80,21 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Hero */}
       <HeroSection />
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <section id="plan" className="pt-24">
-          <PlanGraph />
-        </section>
-
-        <section id="status" className="pt-24">
-          <VerifiedStatus />
-        </section>
-
-        <section id="drive" className="pt-24">
-          <DriveReconciliation />
-        </section>
-
-        <section id="gaps" className="pt-24">
-          <GenuineGaps />
-        </section>
-
-        <section id="birdeye" className="pt-24">
-          <BirdEyeSection />
-        </section>
-
-        <section id="birdeye-query" className="pt-24">
-          <BirdEyeQueryResults />
-        </section>
-
-        <section id="drift" className="pt-24">
-          <DriftRecovery />
-        </section>
-
-        <section id="upstream" className="pt-24">
-          <UpstreamReuse />
-        </section>
-
-        <section id="invariants" className="pt-24">
-          <Invariants />
-        </section>
-
-        <section id="batch-b" className="pt-24">
-          <BatchBCheckpoint />
-        </section>
+        <section id="plan" className="pt-24"><PlanGraph /></section>
+        <section id="status" className="pt-24"><VerifiedStatus /></section>
+        <section id="drive" className="pt-24"><DriveReconciliation /></section>
+        <section id="gaps" className="pt-24"><GenuineGaps /></section>
+        <section id="birdeye" className="pt-24"><BirdEyeSection /></section>
+        <section id="birdeye-query" className="pt-24"><BirdEyeQueryResults /></section>
+        <section id="drift" className="pt-24"><DriftRecovery /></section>
+        <section id="upstream" className="pt-24"><UpstreamReuse /></section>
+        <section id="invariants" className="pt-24"><Invariants /></section>
+        <section id="batch-b" className="pt-24"><BatchBCheckpoint /></section>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
         <p>Brew Agent System — Plan & Implementation Features</p>
         <p className="mt-1 text-gray-600">
