@@ -5,9 +5,11 @@ import DriftRecovery from "./components/DriftRecovery";
 import UpstreamReuse from "./components/UpstreamReuse";
 import Invariants from "./components/Invariants";
 import BatchBCheckpoint from "./components/BatchBCheckpoint";
+import DriveReconciliation from "./components/DriveReconciliation";
+import GenuineGaps from "./components/GenuineGaps";
 import HeroSection from "./components/HeroSection";
 
-type Section = "overview" | "plan" | "status" | "drift" | "upstream" | "invariants" | "batch-b";
+type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "drift" | "upstream" | "invariants" | "batch-b";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("overview");
@@ -23,6 +25,8 @@ export default function App() {
     { id: "overview", label: "Overview", icon: "fa-compass" },
     { id: "plan", label: "Plan Graph", icon: "fa-diagram-project" },
     { id: "status", label: "Verified Status", icon: "fa-circle-check" },
+    { id: "drive", label: "Drive Reconciliation", icon: "fa-folder-open" },
+    { id: "gaps", label: "Genuine Gaps", icon: "fa-triangle-exclamation" },
     { id: "drift", label: "Drift Recovery", icon: "fa-arrows-rotate" },
     { id: "upstream", label: "Upstream Reuse", icon: "fa-book" },
     { id: "invariants", label: "Invariants", icon: "fa-shield-halved" },
@@ -85,6 +89,14 @@ export default function App() {
           <VerifiedStatus />
         </section>
 
+        <section id="drive" className="pt-24">
+          <DriveReconciliation />
+        </section>
+
+        <section id="gaps" className="pt-24">
+          <GenuineGaps />
+        </section>
+
         <section id="drift" className="pt-24">
           <DriftRecovery />
         </section>
@@ -106,7 +118,7 @@ export default function App() {
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
         <p>Brew Agent System — Plan & Implementation Features</p>
         <p className="mt-1 text-gray-600">
-          Source: Letterblack0306/GPT-Knowledge • plan.json + status.json verified through 2026-09-14
+          Source: Letterblack0306/GPT-Knowledge • plan.json + status.json • Drive reconciliation at c37205cb
         </p>
       </footer>
     </div>

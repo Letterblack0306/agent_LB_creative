@@ -33,7 +33,7 @@ export default function HeroSection() {
         <p className="text-base text-gray-500 max-w-3xl mx-auto mb-8 leading-relaxed">
           One persistent reasoning agent receives user requests, reasons dynamically through the active provider,
           sees truthful capabilities, chooses tools when useful, executes through runtime policy,
-          continues from real evidence, and returns the result.
+          continues from real evidence, and returns the result. Drive plans reconciled against current main at c37205cb.
         </p>
 
         {/* Classification badge */}
@@ -54,8 +54,12 @@ export default function HeroSection() {
             <span className="text-gray-300">4 Verified Changes</span>
           </div>
           <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
-            <i className="fa-solid fa-microscope text-cyan-400"></i>
-            <span className="text-gray-300">6 Runtime Findings</span>
+            <i className="fa-solid fa-folder-open text-blue-400"></i>
+            <span className="text-gray-300">6 Drive Lanes</span>
+          </div>
+          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
+            <i className="fa-solid fa-triangle-exclamation text-orange-400"></i>
+            <span className="text-gray-300">6 Genuine Gaps</span>
           </div>
           <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
             <i className="fa-solid fa-shield-halved text-amber-400"></i>
