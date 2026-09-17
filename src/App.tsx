@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import ArchitectureFlow from "./components/ArchitectureFlow";
-import ReferenceAgents from "./components/ReferenceAgents";
-import InputOutputModel from "./components/InputOutputModel";
-import StatusTracker from "./components/StatusTracker";
+import PlanGraph from "./components/PlanGraph";
+import VerifiedStatus from "./components/VerifiedStatus";
+import DriftRecovery from "./components/DriftRecovery";
+import UpstreamReuse from "./components/UpstreamReuse";
+import Invariants from "./components/Invariants";
+import BatchBCheckpoint from "./components/BatchBCheckpoint";
 import HeroSection from "./components/HeroSection";
-import ComparisonTable from "./components/ComparisonTable";
 
-type Section = "overview" | "architecture" | "references" | "io-model" | "status";
+type Section = "overview" | "plan" | "status" | "drift" | "upstream" | "invariants" | "batch-b";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("overview");
@@ -20,10 +21,12 @@ export default function App() {
 
   const navItems: { id: Section; label: string; icon: string }[] = [
     { id: "overview", label: "Overview", icon: "fa-compass" },
-    { id: "architecture", label: "Architecture", icon: "fa-diagram-project" },
-    { id: "references", label: "Reference Agents", icon: "fa-book" },
-    { id: "io-model", label: "I/O Model", icon: "fa-right-left" },
-    { id: "status", label: "Status", icon: "fa-clipboard-check" },
+    { id: "plan", label: "Plan Graph", icon: "fa-diagram-project" },
+    { id: "status", label: "Verified Status", icon: "fa-circle-check" },
+    { id: "drift", label: "Drift Recovery", icon: "fa-arrows-rotate" },
+    { id: "upstream", label: "Upstream Reuse", icon: "fa-book" },
+    { id: "invariants", label: "Invariants", icon: "fa-shield-halved" },
+    { id: "batch-b", label: "Batch B", icon: "fa-flask" },
   ];
 
   return (
@@ -43,10 +46,10 @@ export default function App() {
                 <i className="fa-solid fa-mug-hot text-white text-sm"></i>
               </div>
               <span className="font-bold text-lg tracking-tight">
-                Brew <span className="text-purple-400">Agent System</span>
+                Brew <span className="text-purple-400">Plan & Features</span>
               </span>
             </div>
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -54,7 +57,7 @@ export default function App() {
                     setActiveSection(item.id);
                     document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                     activeSection === item.id
                       ? "bg-purple-500/20 text-purple-300"
                       : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
@@ -74,37 +77,36 @@ export default function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        {/* Overview / Comparison Table */}
-        <section id="overview" className="pt-24">
-          <ComparisonTable />
+        <section id="plan" className="pt-24">
+          <PlanGraph />
         </section>
 
-        {/* Architecture Flow */}
-        <section id="architecture" className="pt-24">
-          <ArchitectureFlow />
-        </section>
-
-        {/* Reference Agents */}
-        <section id="references" className="pt-24">
-          <ReferenceAgents />
-        </section>
-
-        {/* Input/Output Model */}
-        <section id="io-model" className="pt-24">
-          <InputOutputModel />
-        </section>
-
-        {/* Status Tracker */}
         <section id="status" className="pt-24">
-          <StatusTracker />
+          <VerifiedStatus />
+        </section>
+
+        <section id="drift" className="pt-24">
+          <DriftRecovery />
+        </section>
+
+        <section id="upstream" className="pt-24">
+          <UpstreamReuse />
+        </section>
+
+        <section id="invariants" className="pt-24">
+          <Invariants />
+        </section>
+
+        <section id="batch-b" className="pt-24">
+          <BatchBCheckpoint />
         </section>
       </main>
 
       {/* Footer */}
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
-        <p>Brew Agent System — Architecture Documentation & Reference Map</p>
+        <p>Brew Agent System — Plan & Implementation Features</p>
         <p className="mt-1 text-gray-600">
-          GPT-Knowledge verified • Drive index confirmed • Memory anchors validated
+          Source: Letterblack0306/GPT-Knowledge • plan.json + status.json verified through 2026-09-14
         </p>
       </footer>
     </div>

@@ -16,8 +16,8 @@ export default function HeroSection() {
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm mb-8">
-          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-          GPT-Knowledge Verified • Reference Map Complete
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          Source: Letterblack0306/GPT-Knowledge • plan.json + status.json
         </div>
 
         <h1 className="text-5xl sm:text-7xl font-bold tracking-tight mb-6">
@@ -26,49 +26,61 @@ export default function HeroSection() {
           </span>
         </h1>
 
-        <p className="text-xl sm:text-2xl text-gray-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-          A persistent agent runtime with normalized ingress, bounded memory,
-          progressive skills, and evidence-based execution — synthesized from
-          five reference architectures.
+        <p className="text-xl sm:text-2xl text-gray-400 max-w-3xl mx-auto mb-4 leading-relaxed">
+          Plan & Implementation Features
         </p>
 
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm">
-            <span className="text-purple-400 font-mono">Aider</span>
-            <span className="text-gray-500 ml-2">→ Repo cognition</span>
+        <p className="text-base text-gray-500 max-w-3xl mx-auto mb-8 leading-relaxed">
+          One persistent reasoning agent receives user requests, reasons dynamically through the active provider,
+          sees truthful capabilities, chooses tools when useful, executes through runtime policy,
+          continues from real evidence, and returns the result.
+        </p>
+
+        {/* Classification badge */}
+        <div className="inline-block px-4 py-3 rounded-xl bg-amber-500/5 border border-amber-500/20 mb-8 max-w-2xl">
+          <p className="text-xs text-amber-300/80 font-mono leading-relaxed">
+            CURRENT: MODEL_OWNED_REASONING_PATH_ESTABLISHED • SEMANTIC_TOOL_PRESELECTION_REMOVED •
+            GOVERNED_MEMORY_PROVEN • LIVE_TELEGRAM_AND_CONTINUATION_ACCEPTANCE_OPEN
+          </p>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
+            <i className="fa-solid fa-diagram-project text-purple-400"></i>
+            <span className="text-gray-300">12 Plan Nodes</span>
           </div>
-          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm">
-            <span className="text-cyan-400 font-mono">Codex</span>
-            <span className="text-gray-500 ml-2">→ Execution & policy</span>
+          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
+            <i className="fa-solid fa-circle-check text-green-400"></i>
+            <span className="text-gray-300">4 Verified Changes</span>
           </div>
-          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm">
-            <span className="text-emerald-400 font-mono">Hermes</span>
-            <span className="text-gray-500 ml-2">→ Persistent loop</span>
+          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
+            <i className="fa-solid fa-microscope text-cyan-400"></i>
+            <span className="text-gray-300">6 Runtime Findings</span>
           </div>
-          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm">
-            <span className="text-amber-400 font-mono">LobeHub</span>
-            <span className="text-gray-500 ml-2">→ Provider registry</span>
+          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
+            <i className="fa-solid fa-shield-halved text-amber-400"></i>
+            <span className="text-gray-300">10 Invariants</span>
           </div>
-          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm">
-            <span className="text-rose-400 font-mono">OpenHands</span>
-            <span className="text-gray-500 ml-2">→ Event-driven SWE</span>
+          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
+            <i className="fa-solid fa-book text-emerald-400"></i>
+            <span className="text-gray-300">5 Upstream Refs</span>
           </div>
         </div>
 
         <div className="flex justify-center gap-4">
           <a
-            href="#architecture"
+            href="#plan"
             className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium hover:from-purple-500 hover:to-indigo-500 transition-all shadow-lg shadow-purple-900/30"
           >
             <i className="fa-solid fa-diagram-project mr-2"></i>
-            View Architecture
+            View Plan Graph
           </a>
           <a
-            href="#status"
+            href="#batch-b"
             className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-300 font-medium hover:bg-white/10 transition-all"
           >
-            <i className="fa-solid fa-clipboard-check mr-2"></i>
-            Check Status
+            <i className="fa-solid fa-flask mr-2"></i>
+            Batch B Checkpoint
           </a>
         </div>
       </div>
