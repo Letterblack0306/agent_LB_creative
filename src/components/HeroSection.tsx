@@ -66,6 +66,10 @@ export default function HeroSection() {
             <span className="text-gray-300">10 Invariants</span>
           </div>
           <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
+            <i className="fa-solid fa-eye text-cyan-400"></i>
+            <span className="text-gray-300">BirdEye MCP</span>
+          </div>
+          <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm flex items-center gap-2">
             <i className="fa-solid fa-book text-emerald-400"></i>
             <span className="text-gray-300">5 Upstream Refs</span>
           </div>
