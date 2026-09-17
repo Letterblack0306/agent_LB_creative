@@ -44,6 +44,15 @@ const stateClass: Record<string, string> = {
   OBSOLETE: "text-red-400 bg-red-500/10 border-red-500/30",
 };
 
+const reconciledAuthorities = [
+  { item: "scenario-router.mjs", status: "OBSOLETE", detail: "Removed; no active semantic router in canonical path" },
+  { item: "response-decision-layer.mjs", status: "OBSOLETE", detail: "Removed; model-owned finalization replaces deterministic responder" },
+  { item: "agent-loop.mjs", status: "SUPERSEDED", detail: "Replaced by agent-tool-loop.mjs with model-owned continuation" },
+  { item: "provider-planner.mjs", status: "SUPERSEDED", detail: "Model decides next action; no separate planner authority" },
+  { item: "active-read-agent.mjs", status: "CANONICAL", detail: "Retained as bounded inspection capability under canonical runtime" },
+  { item: "workspace-agent/core", status: "CANONICAL", detail: "Reduced to services (retrieval-index, skill-fetcher); no independent planning brain" },
+];
+
 export default function VerifiedStatus() {
   return (
     <div>

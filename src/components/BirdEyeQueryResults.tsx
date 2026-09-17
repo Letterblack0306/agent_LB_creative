@@ -76,7 +76,22 @@ const planNodes = [
 ];
 
 export default function BirdEyeQueryResults() {
-  const [tab, setTab] = useState<"plan" | "sources" | "mapping" | "rules">("plan");
+  const [tab, setTab] = useState<"projection" | "plan" | "sources" | "mapping" | "rules">("projection");
+
+  const evidenceColors = {
+    amber: "bg-amber-500/10 text-amber-300 border-amber-500/30",
+  };
+
+  const legacyMapping = [
+    { old: "35-feature completion matrix", now: "B1–B6 specific plan with falsifiers", disposition: "Replaced by evidence-gated plan items" },
+    { old: "BREW_MEMORY_AND_AUTONOMY_IMPL_PLAN.md", now: "B1–B6 + provenFoundations", disposition: "Historical; superseded by specific plan" },
+    { old: "Unified Tool Catalog", now: "B3 (Capability truth)", disposition: "Implemented; model-visible governed registry" },
+    { old: "Discovery Before Mutation", now: "B3 + workspace policy", disposition: "Implemented; discovery required before mutation" },
+    { old: "Governed Memory Promotion", now: "openGap: memory-promotion", disposition: "Partial; curation exists, automatic promotion not proven" },
+    { old: "Retry / Verifier Loop", now: "B4 + agent-tool-loop", disposition: "Superseded; model-owned continuation replaces deterministic verifier" },
+    { old: "Workspace Agent", now: "scheduler capability + workspace tools", disposition: "Standalone agent obsolete; capabilities retained" },
+    { old: "Semantic Long-Term Memory", now: "memory curation + semantic index", disposition: "Implemented; LanceDB not required" },
+  ];
 
   return (
     <div>
@@ -123,7 +138,7 @@ export default function BirdEyeQueryResults() {
       </div>
 
       {/* Full Projection */}
-      {activeTab === "projection" && (
+      {tab === "projection" && (
         <div className="space-y-6">
           {/* Attribution */}
           <div className="rounded-xl bg-white/[0.02] border border-white/10 p-5">
@@ -228,7 +243,7 @@ export default function BirdEyeQueryResults() {
       )}
 
       {/* Plan Nodes */}
-      {activeTab === "plan" && (
+      {tab === "plan" && (
         <div className="space-y-3">
           {primaryPlan.map((item) => (
             <div key={item.id} className="rounded-xl bg-white/[0.02] border border-white/10 p-5">
