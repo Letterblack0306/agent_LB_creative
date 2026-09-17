@@ -1,387 +1,166 @@
 import { useState } from "react";
+import { brewPlanMeta, planningSources, primaryPlan, provenFoundations } from "../data/brewPlanning";
 
-// Simulated BirdEye projection output based on actual plan.json + status.json + birdeye_projection.py
-const birdeyeProjection = {
-  schemaVersion: 1,
-  sources: [
-    {
-      gateway: "bird-projection-projection",
-      owner: "Letterblack0306/Letterblack_BirdEye (feat/workspace-diagnostic-bridge)",
-      authority: "feat/local-workspace-change-bridge request/response contract",
-      noWebhook: true,
-      readOnly: true,
-    },
-  ],
-  attribution: {
-    projectId: "brew",
-    projectName: "Brew",
-    workspaceId: "brew",
-    repository: "Letterblack0306/brew",
-    workspaceRoot: "G:\\Developments\\38_Brew_Creative_Agent",
-    branch: "main",
-    head: "c37205cb09e6e7cc84cf770fcc04c3e959808506",
-    observedAt: "2026-09-17T14:32:00Z",
-  },
-  git: {
-    isRepository: true,
-    branch: "main",
-    head: "c37205cb09e6e7cc84cf770fcc04c3e959808506",
-    dirty: false,
-    changedPathCount: 0,
-    evidenceLevel: "PROVEN",
-    tracking: { upstreamRef: "origin/main", tracked: true, ahead: 0, behind: 0 },
-  },
-  planStatus: {
-    planState: "DOCUMENTED_CURRENT",
-    planDocument: "C:\\MCP Local\\GPT-Knowledge\\project-engineering\\projects\\brew\\plan.json",
-    statusDocument: "C:\\MCP Local\\GPT-Knowledge\\project-engineering\\projects\\brew\\status.json",
-    activeGate: "drift-recovery-reference-reuse",
-    documentRevision: "2026-09-08",
-    authoritative: true,
-    evidenceLevel: "PROVEN",
-  },
-  alignment: {
-    state: "ALIGNED",
-    documentedSourceHead: "39da8df909e6e7cc84cf770fcc04c3e959808506",
-    observedHead: "c37205cb09e6e7cc84cf770fcc04c3e959808506",
-    evidenceLevel: "PROVEN",
-  },
-  verdict: "REVIEW",
-  syncState: "LOCAL_ONLY",
-};
-
-// Plan nodes from actual plan.json
-const planNodes = [
-  { id: "architecture", lane: "Authority", title: "One reasoning agent and one canonical runtime", status: "proven" },
-  { id: "canonical-query", lane: "Authority", title: "Canonical conversational turn path", status: "proven" },
-  { id: "drift-recovery-reference-reuse", lane: "Active Gate", title: "Recover drift and converge on upstream-proven contracts", status: "current", priority: "P0" },
-  { id: "provider-result-invariant", lane: "P0 Correctness", title: "One model-turn success invariant", status: "warning", priority: "P0" },
-  { id: "telegram-transport-only", lane: "P0 Correctness", title: "Telegram is transport, not a second agent", status: "warning", priority: "P0" },
-  { id: "legacy-response-quarantine", lane: "P0 Correctness", title: "Quarantine duplicate response authorities", status: "next", priority: "P0" },
-  { id: "session-turn-item", lane: "P1 Runtime", title: "Canonical Session / Turn / Item lifecycle", status: "next", priority: "P1" },
-  { id: "capability-registry", lane: "P1 Runtime", title: "Canonical capability registry and health", status: "next", priority: "P1" },
-  { id: "provider-continuation", lane: "P1 Runtime", title: "Provider-native tool continuation", status: "next", priority: "P1" },
-  { id: "recovery", lane: "P1 Runtime", title: "Cancellation / restart / resume / exactly-once", status: "next", priority: "P1" },
-  { id: "deferred-capabilities", lane: "P2 Recovered Features", title: "MCP, skills, scheduler, browser/desktop and knowledge expansion", status: "blocked", priority: "P2" },
-  { id: "ci-release", lane: "Release", title: "Installed runtime + current-head CI acceptance", status: "blocked", priority: "LOCKED" },
+const legacyMapping = [
+  { old: "Phase 0 Repository hygiene", now: "Baseline prerequisite", disposition: "Do not use as active sequencing authority; verify local worktree separately from GitHub source." },
+  { old: "Phase 1 Runtime authority", now: "Proven foundation + B1/B2", disposition: "One-agent authority is established; remaining work is identity and workspace propagation proof." },
+  { old: "Phase 2 Provider platform", now: "Open provider gap + B1/B3", disposition: "Provider expansion continues only through the common provider/runtime identity and evidence contract." },
+  { old: "Phase 3 Operation lifecycle/recovery", now: "B1 + B3 + B4", disposition: "Decomposed into identity, evidence ownership and restart/exactly-once continuation." },
+  { old: "Phase 4 UI/CLI contracts", now: "B6 + release acceptance", disposition: "UI/CLI proof is external-completion evidence, not a separate reasoning authority." },
+  { old: "Phase 5 Browser/repository E2E", now: "B6", disposition: "Current browser blocker is target/composer availability, not relay/CDP or autonomy." },
+  { old: "Phase 6 Installed runtime", now: "Open installed-runtime gap", disposition: "Requires exact source/deploy/runtime identity plus restart rediscovery." },
+  { old: "Phase 7 Documentation/branch closure", now: "Documentation authority gap", disposition: "Historical plans must be marked historical and this specific plan becomes the dashboard projection." },
 ];
-
-// Planned implementation sequence from brew-complete-planned-structure
-const plannedSequence = [
-  { phase: "P0", task: "Prove exact operation-correlation loss boundary", status: "unknown" },
-  { phase: "P1", task: "Repair and runtime-prove operation correlation", status: "unknown" },
-  { phase: "P2", task: "Establish one canonical Session / Turn / Item lifecycle", status: "unknown" },
-  { phase: "P3", task: "Finish provider/model capability negotiation and active consumption", status: "unknown" },
-  { phase: "P4", task: "Prove one real provider-native tool-call turn", status: "unknown" },
-  { phase: "P5", task: "Prove governed host tool execution", status: "unknown" },
-  { phase: "P6", task: "Prove tool-result -> provider continuation", status: "unknown" },
-  { phase: "P7", task: "Prove full operation event/evidence trajectory", status: "unknown" },
-  { phase: "P8", task: "Prove cancellation + error attribution", status: "unknown" },
-  { phase: "P9", task: "Prove crash/restart/resume + exactly-once behavior", status: "unknown" },
-  { phase: "P10", task: "Establish typed professional workspace + Git capabilities", status: "unknown" },
-  { phase: "P11", task: "Establish PTY/background processes + live output events", status: "unknown" },
-  { phase: "P12", task: "Prove active user steering / interrupt / cancel", status: "unknown" },
-  { phase: "P13", task: "Prove dynamic tool create/register/restart/reuse lifecycle", status: "unknown" },
-  { phase: "P14", task: "Prove browser real E2E", status: "unknown" },
-  { phase: "P15", task: "Prove Telegram real E2E", status: "unknown" },
-  { phase: "P16", task: "Establish bidirectional agent-control API", status: "unknown" },
-  { phase: "P17", task: "Prove persistent session replay/resume/fork", status: "unknown" },
-  { phase: "P18", task: "Build high-fidelity CLI/TUI client over the runtime", status: "unknown" },
-  { phase: "P19", task: "Prove UI composition acceptance", status: "unknown" },
-  { phase: "P20", task: "Prove installed-runtime acceptance", status: "unknown" },
-  { phase: "P21", task: "Prove full CI / release acceptance", status: "unknown" },
-  { phase: "P22", task: "Remove/reconcile remaining legacy and duplicate authorities", status: "unknown" },
-];
-
-// Evidence position from brew-complete-planned-structure
-const evidencePosition = [
-  { area: "One reasoning-agent model", state: "ACTIVE_PROJECT_CONTRACT", color: "green" },
-  { area: "LM Studio provider selection through Brew", state: "RUNTIME_PROVEN", color: "green" },
-  { area: "qwen/qwen3-vl-8b selection through Brew", state: "RUNTIME_PROVEN", color: "green" },
-  { area: "Brew -> LM Studio connectivity", state: "RUNTIME_PROVEN", color: "green" },
-  { area: "Canonical provider-backed /query text response", state: "RUNTIME_PROVEN", color: "green" },
-  { area: "Provider/model/session attribution in model events", state: "RUNTIME_PROVEN", color: "green" },
-  { area: "Operation correlation in observed model events", state: "RUNTIME_DISPROVEN", color: "red" },
-  { area: "Exact operation-correlation loss boundary", state: "NOT_YET_PROVEN", color: "gray" },
-  { area: "Proven correlation patch owner", state: "NOT_YET_PROVEN", color: "gray" },
-  { area: "Durable canonical turnId semantics", state: "UNVERIFIED", color: "amber" },
-  { area: "Live provider tool call -> host execution -> continuation", state: "NOT_YET_PROVEN", color: "gray" },
-  { area: "Interactive/background terminal runtime", state: "INCOMPLETE", color: "amber" },
-  { area: "Exactly-once crash/restart recovery", state: "NOT_YET_PROVEN", color: "gray" },
-  { area: "Dynamic tool lifecycle E2E", state: "NOT_YET_PROVEN", color: "gray" },
-  { area: "Browser E2E", state: "NOT_YET_PROVEN", color: "gray" },
-  { area: "Telegram live delivery E2E", state: "NOT_YET_PROVEN", color: "gray" },
-  { area: "Installed runtime acceptance", state: "NOT_YET_PROVEN", color: "gray" },
-  { area: "Current-head full CI/release acceptance", state: "NOT_YET_PROVEN", color: "gray" },
-];
-
-const statusColors: Record<string, { bg: string; text: string; border: string }> = {
-  proven: { bg: "bg-green-500/10", text: "text-green-400", border: "border-green-500/30" },
-  current: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/30" },
-  warning: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-500/30" },
-  next: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-500/30" },
-  blocked: { bg: "bg-red-500/10", text: "text-red-400", border: "border-red-500/30" },
-};
-
-const evidenceColors: Record<string, string> = {
-  green: "text-green-400 bg-green-500/10 border-green-500/30",
-  red: "text-red-400 bg-red-500/10 border-red-500/30",
-  amber: "text-amber-400 bg-amber-500/10 border-amber-500/30",
-  gray: "text-gray-400 bg-gray-500/10 border-gray-500/30",
-};
 
 export default function BirdEyeQueryResults() {
-  const [activeTab, setActiveTab] = useState<"projection" | "plan" | "sequence" | "evidence">("projection");
+  const [tab, setTab] = useState<"plan" | "sources" | "mapping" | "rules">("plan");
 
   return (
     <div>
-      <div className="text-center mb-12">
+      <div className="text-center mb-10">
         <h2 className="text-3xl sm:text-4xl font-bold mb-4">
           <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
-            BirdEye Query: Brew Plans
+            BirdEye Planning Projection
           </span>
         </h2>
-        <p className="text-gray-400 max-w-3xl mx-auto">
-          Simulated output of <code className="text-cyan-300 bg-cyan-500/10 px-1.5 py-0.5 rounded text-sm">python birdeye_projection.py projection brew</code>
-          {" "}— what BirdEye returns when querying Brew's plans, status, and workspace state.
+        <p className="text-gray-400 max-w-4xl mx-auto">
+          Static dashboard projection of the current Brew plan. BirdEye remains the preferred local workspace/index evidence layer when reachable;
+          this panel does not claim a live BirdEye query unless a fresh export is wired in.
         </p>
       </div>
 
-      {/* Command */}
-      <div className="rounded-xl bg-black/40 border border-white/10 p-4 mb-8 font-mono text-sm">
-        <div className="flex items-center gap-2 text-gray-500 mb-2">
-          <span className="text-green-400">$</span>
-          <span>python birdeye_projection.py projection brew</span>
-        </div>
-        <div className="text-xs text-gray-600">
-          # Reads: C:\MCP Local\GPT-Knowledge\project-engineering\projects\brew\plan.json
-          <br />
-          # Reads: C:\MCP Local\GPT-Knowledge\project-engineering\projects\brew\status.json
-          <br />
-          # Audits: G:\Developments\38_Brew_Creative_Agent (git read-only)
+      <div className="rounded-xl bg-black/30 border border-white/10 p-4 mb-8 font-mono text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-gray-400">
+          <span>Brew: {brewPlanMeta.sourceRepo}@{brewPlanMeta.sourceShort}</span>
+          <span>GPT-K: {brewPlanMeta.gptkRepo}@{brewPlanMeta.gptkShort}</span>
+          <span>Program: {brewPlanMeta.activeProgram}</span>
+          <span>As of: {brewPlanMeta.asOf}</span>
         </div>
       </div>
 
-      {/* Tabs */}
       <div className="flex flex-wrap gap-2 mb-6">
         {[
-          { id: "projection" as const, label: "Full Projection", icon: "fa-eye" },
-          { id: "plan" as const, label: "Plan Nodes (12)", icon: "fa-diagram-project" },
-          { id: "sequence" as const, label: "Implementation Sequence (23)", icon: "fa-list-ol" },
-          { id: "evidence" as const, label: "Evidence Position (18)", icon: "fa-microscope" },
-        ].map((tab) => (
+          { id: "plan" as const, label: "Current B1–B6 Plan", icon: "fa-diagram-project" },
+          { id: "sources" as const, label: "Evidence Sources", icon: "fa-database" },
+          { id: "mapping" as const, label: "Old → Current Mapping", icon: "fa-code-compare" },
+          { id: "rules" as const, label: "Evidence Rules", icon: "fa-shield-halved" },
+        ].map((item) => (
           <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+            key={item.id}
+            onClick={() => setTab(item.id)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              activeTab === tab.id
+              tab === item.id
                 ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
                 : "text-gray-500 hover:text-gray-300 bg-white/5 border border-transparent"
             }`}
           >
-            <i className={`fa-solid ${tab.icon} mr-2`}></i>
-            {tab.label}
+            <i className={`fa-solid ${item.icon} mr-2`}></i>{item.label}
           </button>
         ))}
       </div>
 
-      {/* Full Projection */}
-      {activeTab === "projection" && (
-        <div className="space-y-6">
-          {/* Attribution */}
-          <div className="rounded-xl bg-white/[0.02] border border-white/10 p-5">
-            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Attribution</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {Object.entries(birdeyeProjection.attribution).map(([key, value]) => (
-                <div key={key} className="flex items-start gap-2">
-                  <span className="text-xs text-gray-500 font-mono w-28 shrink-0">{key}:</span>
-                  <span className="text-xs text-gray-300 font-mono break-all">{String(value)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Git Audit */}
-          <div className="rounded-xl bg-white/[0.02] border border-white/10 p-5">
-            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Git Audit</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-400"></span>
-                <span className="text-xs text-gray-300">isRepository: <span className="text-green-400">true</span></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">branch: <span className="text-cyan-300 font-mono">main</span></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">head: <span className="text-gray-400 font-mono text-[10px]">c37205cb...</span></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">dirty: <span className="text-green-400">false</span></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">evidenceLevel: <span className="text-green-400">PROVEN</span></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">tracking: <span className="text-gray-400">origin/main, ahead:0, behind:0</span></span>
-              </div>
-            </div>
-          </div>
-
-          {/* Plan Status */}
-          <div className="rounded-xl bg-purple-500/5 border border-purple-500/20 p-5">
-            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Plan Status</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <span className="text-xs text-gray-500">planState:</span>
-                <span className="text-xs text-purple-300 font-mono ml-2">DOCUMENTED_CURRENT</span>
-              </div>
-              <div>
-                <span className="text-xs text-gray-500">activeGate:</span>
-                <span className="text-xs text-amber-300 font-mono ml-2">drift-recovery-reference-reuse</span>
-              </div>
-              <div>
-                <span className="text-xs text-gray-500">authoritative:</span>
-                <span className="text-xs text-green-400 font-mono ml-2">true</span>
-              </div>
-              <div>
-                <span className="text-xs text-gray-500">evidenceLevel:</span>
-                <span className="text-xs text-green-400 font-mono ml-2">PROVEN</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Alignment */}
-          <div className="rounded-xl bg-white/[0.02] border border-white/10 p-5">
-            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Alignment</h3>
-            <div className="flex items-center gap-4 flex-wrap">
-              <span className={`text-xs px-2 py-1 rounded border font-mono ${evidenceColors.green}`}>
-                state: ALIGNED
-              </span>
-              <span className="text-xs text-gray-400">
-                documented: <code className="text-gray-300">39da8df9...</code>
-              </span>
-              <span className="text-xs text-gray-400">
-                observed: <code className="text-gray-300">c37205cb...</code>
-              </span>
-            </div>
-          </div>
-
-          {/* Verdict */}
-          <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-5">
-            <div className="flex items-center gap-3">
-              <span className="text-xs px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono font-bold">
-                verdict: REVIEW
-              </span>
-              <span className="text-xs text-gray-400">
-                Workspace HEAD has advanced past documented source_head. Plan documents may need reconciliation.
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Plan Nodes */}
-      {activeTab === "plan" && (
+      {tab === "plan" && (
         <div className="space-y-3">
-          <p className="text-sm text-gray-400 mb-4">
-            From <code className="text-cyan-300 bg-cyan-500/10 px-1.5 py-0.5 rounded text-xs">plan.json</code> — 
-            12 nodes across 6 lanes. Active gate: <span className="text-purple-300">drift-recovery-reference-reuse</span>
-          </p>
-          {planNodes.map((node) => {
-            const colors = statusColors[node.status];
-            return (
-              <div key={node.id} className={`rounded-xl ${colors.bg} border ${colors.border} p-4`}>
-                <div className="flex items-center gap-3 flex-wrap">
-                  <span className={`text-[10px] px-2 py-0.5 rounded font-mono ${colors.text}`}>
-                    {node.status.toUpperCase()}
-                  </span>
-                  {node.priority && (
-                    <span className="text-[10px] text-gray-500 font-mono">{node.priority}</span>
-                  )}
-                  <span className="text-xs text-gray-500">{node.lane}</span>
+          {primaryPlan.map((item) => (
+            <div key={item.id} className="rounded-xl bg-white/[0.02] border border-white/10 p-5">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="text-xs font-mono text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded">{item.id}</span>
+                <span className="text-[10px] font-mono text-gray-500">{item.lane}</span>
+                <span className="text-[10px] font-mono text-purple-300">{item.state.toUpperCase()}</span>
+              </div>
+              <h3 className="font-semibold text-gray-100">{item.title}</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Question</p>
+                  <p className="text-xs text-gray-300 leading-relaxed">{item.question}</p>
                 </div>
-                <p className="text-sm text-gray-200 mt-2 font-medium">{node.title}</p>
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Observable</p>
+                  <p className="text-xs text-cyan-200/80 leading-relaxed">{item.observable}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Next action</p>
+                  <p className="text-xs text-blue-200/80 leading-relaxed">{item.nextAction}</p>
+                </div>
               </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Implementation Sequence */}
-      {activeTab === "sequence" && (
-        <div>
-          <p className="text-sm text-gray-400 mb-4">
-            From <code className="text-cyan-300 bg-cyan-500/10 px-1.5 py-0.5 rounded text-xs">brew-complete-planned-structure-2026-08-17.md</code> — 
-            23 planned phases. Phase labels are planning notation, not evidence.
-          </p>
-          <div className="rounded-xl bg-white/[0.02] border border-white/10 overflow-hidden">
-            {plannedSequence.map((item, i) => (
-              <div key={i} className="flex items-center gap-4 p-3 border-b border-white/5 last:border-0">
-                <span className="text-xs font-mono text-cyan-400 w-8 shrink-0">{item.phase}</span>
-                <span className="text-sm text-gray-300 flex-1">{item.task}</span>
-                <span className="text-[10px] text-gray-500 font-mono">NOT_STARTED</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Evidence Position */}
-      {activeTab === "evidence" && (
-        <div>
-          <p className="text-sm text-gray-400 mb-4">
-            From <code className="text-cyan-300 bg-cyan-500/10 px-1.5 py-0.5 rounded text-xs">brew-complete-planned-structure-2026-08-17.md</code> — 
-            current evidence position at architecture checkpoint.
-          </p>
-          <div className="space-y-2">
-            {evidencePosition.map((item, i) => (
-              <div key={i} className="flex items-center gap-3 rounded-lg bg-white/[0.02] border border-white/5 p-3">
-                <span className={`text-[10px] px-2 py-0.5 rounded border font-mono shrink-0 ${evidenceColors[item.color]}`}>
-                  {item.state}
-                </span>
-                <span className="text-sm text-gray-300">{item.area}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Summary */}
-          <div className="mt-6 grid grid-cols-3 gap-4">
-            <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
-              <div className="text-2xl font-bold text-green-400">6</div>
-              <div className="text-xs text-gray-400">RUNTIME_PROVEN</div>
-            </div>
-            <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-4 text-center">
-              <div className="text-2xl font-bold text-amber-400">2</div>
-              <div className="text-xs text-gray-400">INCOMPLETE/UNVERIFIED</div>
-            </div>
-            <div className="rounded-xl bg-red-500/5 border border-red-500/20 p-4 text-center">
-              <div className="text-2xl font-bold text-red-400">10</div>
-              <div className="text-xs text-gray-400">NOT_YET_PROVEN</div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Other BirdEye commands */}
-      <div className="mt-12 rounded-xl bg-white/[0.02] border border-white/10 p-6">
-        <h3 className="font-bold text-gray-200 mb-4 text-sm uppercase tracking-wider">
-          Other BirdEye Commands for Brew
-        </h3>
-        <div className="space-y-3 font-mono text-xs">
-          {[
-            { cmd: "python birdeye_projection.py projects", desc: "List all registered projects (brew, memory, lbe, looptool, etc.)" },
-            { cmd: "python birdeye_projection.py audit brew", desc: "Read-only git audit for brew workspace" },
-            { cmd: "python birdeye_projection.py audit brew --compare c37205cb", desc: "Compare brew HEAD against specific commit" },
-            { cmd: "python birdeye_projection.py export brew", desc: "Write evidence snapshot for UI rendering" },
-            { cmd: "python birdeye_projection.py history --limit 50", desc: "Show bounded request/response history" },
-          ].map((item, i) => (
-            <div key={i} className="flex items-start gap-4 p-2 rounded-lg hover:bg-white/[0.02]">
-              <code className="text-cyan-300 shrink-0">{item.cmd}</code>
-              <span className="text-gray-500">// {item.desc}</span>
             </div>
           ))}
         </div>
-      </div>
+      )}
+
+      {tab === "sources" && (
+        <div className="space-y-3">
+          {planningSources.map((source, index) => (
+            <div key={source.label} className="rounded-xl bg-white/[0.02] border border-white/10 p-4 flex gap-4">
+              <span className="text-cyan-400 font-mono text-sm">{index + 1}</span>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-200">{source.label}</h3>
+                <p className="text-xs text-gray-500 font-mono mt-1">{source.ref}</p>
+                <p className="text-sm text-gray-400 mt-2">{source.role}</p>
+              </div>
+            </div>
+          ))}
+          <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-4">
+            <p className="text-xs text-amber-300">
+              Local BirdEye unavailability means local workspace state is UNKNOWN; GitHub remote state must not be relabeled as local proof.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {tab === "mapping" && (
+        <div className="space-y-3">
+          {legacyMapping.map((item) => (
+            <div key={item.old} className="rounded-xl bg-white/[0.02] border border-white/10 p-4">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-3 items-start">
+                <div>
+                  <p className="text-[10px] text-gray-500 uppercase tracking-wider">Historical planning label</p>
+                  <p className="text-sm text-gray-300 mt-1">{item.old}</p>
+                </div>
+                <i className="fa-solid fa-arrow-right text-gray-600 mt-4 hidden lg:block"></i>
+                <div>
+                  <p className="text-[10px] text-gray-500 uppercase tracking-wider">Current specific owner</p>
+                  <p className="text-sm text-cyan-300 mt-1">{item.now}</p>
+                  <p className="text-xs text-gray-500 mt-2">{item.disposition}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {tab === "rules" && (
+        <div className="space-y-5">
+          <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-5">
+            <h3 className="font-semibold text-green-300 mb-3">Proven foundations</h3>
+            <ul className="space-y-2">
+              {provenFoundations.map((item) => (
+                <li key={item.id} className="text-sm text-gray-300">
+                  <span className="text-green-400">✓</span> <span className="font-medium">{item.title}:</span> <span className="text-gray-500">{item.evidence}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-xl bg-purple-500/5 border border-purple-500/20 p-5">
+            <h3 className="font-semibold text-purple-300 mb-3">Diagnostic contract</h3>
+            <pre className="text-xs text-gray-300 font-mono whitespace-pre-wrap leading-relaxed">{`QUESTION
+CURRENT HYPOTHESIS
+AUTHORITATIVE OWNER/PATH
+AUTHORITATIVE OBSERVABLE
+EXPECTED OBSERVATION
+FALSIFIER
+TARGET REPOSITORY / REVISION / RUNTIME
+RESULT CLASSIFICATION
+EVIDENCE
+NEXT ACTION JUSTIFIED BY THIS RESULT`}</pre>
+          </div>
+          <div className="rounded-xl bg-blue-500/5 border border-blue-500/20 p-5">
+            <p className="text-sm text-gray-300">
+              Internal reasoning complete ≠ tool execution complete ≠ validation complete ≠ durable operation complete ≠ external target complete ≠ user-visible delivery complete.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
