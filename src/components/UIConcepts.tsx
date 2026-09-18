@@ -70,11 +70,11 @@ function TerminalHUD() {
       <div ref={terminalRef} className="p-4 h-80 overflow-y-auto font-mono text-xs leading-relaxed">
         {lines.map((line, i) => (
           <div key={i} className={`${
-            line.startsWith(">") ? "text-cyan-300" :
-            line.includes("[thinking]") ? "text-purple-400/80" :
-            line.includes("[tool]") ? "text-amber-400/80" :
-            line.includes("[evidence]") ? "text-emerald-400/80" :
-            line.includes("✓") ? "text-green-400" :
+            line?.startsWith(">") ? "text-cyan-300" :
+            line?.includes("[thinking]") ? "text-purple-400/80" :
+            line?.includes("[tool]") ? "text-amber-400/80" :
+            line?.includes("[evidence]") ? "text-emerald-400/80" :
+            line?.includes("✓") ? "text-green-400" :
             "text-gray-400"
           }`}>
             {line}
@@ -238,8 +238,9 @@ function NodeGraph() {
         {/* SVG connections */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none">
           {connections.map((conn, i) => {
-            const from = nodes.find((n) => n.id === conn.from)!;
-            const to = nodes.find((n) => n.id === conn.to)!;
+            const from = nodes.find((n) => n.id === conn.from);
+            const to = nodes.find((n) => n.id === conn.to);
+            if (!from || !to) return null;
             const isActive = activeNode === conn.from || activeNode === conn.to;
             return (
               <line
@@ -278,23 +279,27 @@ function NodeGraph() {
 
       {/* Detail panel */}
       <div className="px-4 py-3 border-t border-white/5 bg-black/20">
-        {activeNode ? (
-          <div className="flex items-center gap-3">
-            <div className={`w-8 h-8 rounded-lg border flex items-center justify-center ${colorMap[nodes.find(n => n.id === activeNode)!.color]}`}>
-              <i className={`fa-solid ${nodes.find(n => n.id === activeNode)!.icon} text-xs`}></i>
+        {activeNode ? (() => {
+          const node = nodes.find(n => n.id === activeNode);
+          if (!node) return <p className="text-[10px] text-gray-600">Node not found</p>;
+          return (
+            <div className="flex items-center gap-3">
+              <div className={`w-8 h-8 rounded-lg border flex items-center justify-center ${colorMap[node.color]}`}>
+                <i className={`fa-solid ${node.icon} text-xs`}></i>
+              </div>
+              <div>
+                <p className="text-xs text-gray-200 font-medium">{node.label}</p>
+                <p className="text-[10px] text-gray-500">
+                  {activeNode === "model" ? "Model-owned semantic reasoning" :
+                   activeNode === "tool1" ? "Governed workspace search" :
+                   activeNode === "tool2" ? "Scoped memory retrieval" :
+                   activeNode === "evidence" ? "Receipt-bound evidence" :
+                   "Click nodes to inspect"}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-xs text-gray-200 font-medium">{nodes.find(n => n.id === activeNode)!.label}</p>
-              <p className="text-[10px] text-gray-500">
-                {activeNode === "model" ? "Model-owned semantic reasoning" :
-                 activeNode === "tool1" ? "Governed workspace search" :
-                 activeNode === "tool2" ? "Scoped memory retrieval" :
-                 activeNode === "evidence" ? "Receipt-bound evidence" :
-                 "Click nodes to inspect"}
-              </p>
-            </div>
-          </div>
-        ) : (
+          );
+        })() : (
           <p className="text-[10px] text-gray-600">Click any node to inspect</p>
         )}
       </div>
