@@ -10,6 +10,7 @@ import GenuineGaps from "./components/GenuineGaps";
 import BirdEyeSection from "./components/BirdEyeSection";
 import BirdEyeQueryResults from "./components/BirdEyeQueryResults";
 import HeroSection from "./components/HeroSection";
+import { brewPlanMeta } from "./data/brewPlanning";
 
 type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b";
 

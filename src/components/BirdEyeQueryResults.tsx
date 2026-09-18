@@ -20,17 +20,17 @@ const birdeyeProjection = {
     repository: "Letterblack0306/brew",
     workspaceRoot: "G:\\Developments\\38_Brew_Creative_Agent",
     branch: "main",
-    head: "54673a6",
-    observedAt: "2026-09-17T16:00:00Z",
+    head: "c37205cb",
+    observedAt: "2026-09-18 (GitHub remote verification only)",
   },
   git: {
     isRepository: true,
     branch: "main",
-    head: "54673a6",
-    dirty: false,
+    head: "c37205cb",
+    dirty: null,
     changedPathCount: 0,
-    evidenceLevel: "PROVEN",
-    tracking: { upstreamRef: "origin/main", tracked: true, ahead: 0, behind: 0 },
+    evidenceLevel: "REMOTE_VERIFIED",
+    tracking: { upstreamRef: "origin/main", tracked: null, ahead: null, behind: null },
   },
   planStatus: {
     planState: "DOCUMENTED_CURRENT",
@@ -44,18 +44,18 @@ const birdeyeProjection = {
   alignment: {
     state: "DIVERGED",
     documentedSourceHead: "39da8df909e6e7cc84cf770fcc04c3e959808506",
-    observedHead: "54673a6",
+    observedHead: "c37205cb",
     evidenceLevel: "PROVEN",
-    reason: "Workspace has advanced 2 commits past documented source_head with 8 concrete fixes",
+    reason: "GitHub remote main is verified at c37205cb; local BirdEye workspace state is not proven by this static PR review",
   },
   verdict: "REVIEW",
-  syncState: "LOCAL_ONLY",
+  syncState: "REMOTE_VERIFIED_LOCAL_UNKNOWN",
   recentActivity: {
-    latestCommit: "54673a6",
+    latestCommit: "c37205cb",
     commitDate: "2026-09-17",
-    changes: 8,
-    filesChanged: 7,
-    branchStatus: "main = origin/main (up to date)",
+    changes: 1,
+    filesChanged: 1,
+    branchStatus: "GitHub origin/main = c37205cb; local workspace unknown",
   },
 };
 
@@ -168,13 +168,13 @@ export default function BirdEyeQueryResults() {
                 <span className="text-xs text-gray-300">head: <span className="text-gray-400 font-mono text-[10px]">54673a6</span></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">dirty: <span className="text-green-400">false</span></span>
+                <span className="text-xs text-gray-300">local dirty state: <span className="text-amber-400">UNKNOWN — query BirdEye/local workspace</span></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">evidenceLevel: <span className="text-green-400">PROVEN</span></span>
+                <span className="text-xs text-gray-300">evidenceLevel: <span className="text-cyan-400">REMOTE_VERIFIED</span></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">tracking: <span className="text-gray-400">origin/main, ahead:0, behind:0</span></span>
+                <span className="text-xs text-gray-300">tracking: <span className="text-gray-400">GitHub origin/main verified; local ahead/behind UNKNOWN</span></span>
               </div>
             </div>
           </div>
@@ -213,11 +213,11 @@ export default function BirdEyeQueryResults() {
                 documented: <code className="text-gray-300">39da8df9...</code>
               </span>
               <span className="text-xs text-gray-400">
-                observed: <code className="text-emerald-300">54673a6</code>
+                observed: <code className="text-emerald-300">c37205cb</code>
               </span>
             </div>
             <p className="text-xs text-gray-500 mt-2">
-              Workspace has advanced past documented source_head with 8 concrete fixes (renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation)
+              GitHub remote main is verified at c37205cb. A newer local workspace revision, dirty state, or ahead/behind count requires live BirdEye/local evidence.
             </p>
           </div>
 
@@ -228,13 +228,13 @@ export default function BirdEyeQueryResults() {
                 verdict: REVIEW
               </span>
               <div className="text-xs text-gray-400">
-                <p>Workspace HEAD has advanced past documented source_head with 8 concrete fixes.</p>
+                <p>Remote Brew main is verified at c37205cb; local workspace state is not proven by this static dashboard.</p>
                 <p className="mt-1 text-emerald-300/80">
                   <i className="fa-solid fa-circle-check mr-1"></i>
-                  Branch status: main = origin/main (up to date) • 7 files changed • Temporary bat scripts cleaned
+                  GitHub remote: origin/main = c37205cb • local workspace/ahead/behind require BirdEye evidence
                 </p>
                 <p className="mt-1 text-gray-500">
-                  Plan documents may need reconciliation to reflect the new commit.
+                  Historical plan documents should be reconciled against the verified remote revision and any separately proven local BirdEye state.
                 </p>
               </div>
             </div>
