@@ -10,9 +10,10 @@ import GenuineGaps from "./components/GenuineGaps";
 import BirdEyeSection from "./components/BirdEyeSection";
 import BirdEyeQueryResults from "./components/BirdEyeQueryResults";
 import HeroSection from "./components/HeroSection";
+import UIConcepts from "./components/UIConcepts";
 import { brewPlanMeta } from "./data/brewPlanning";
 
-type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b";
+type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b" | "ui-concepts";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("overview");
@@ -36,6 +37,7 @@ export default function App() {
     { id: "upstream", label: "Upstream Reuse", icon: "fa-book" },
     { id: "invariants", label: "Invariants", icon: "fa-shield-halved" },
     { id: "batch-b", label: "Batch B", icon: "fa-flask" },
+    { id: "ui-concepts", label: "UI Concepts", icon: "fa-wand-magic-sparkles" },
   ];
 
   return (
@@ -93,6 +95,7 @@ export default function App() {
         <section id="upstream" className="pt-24"><UpstreamReuse /></section>
         <section id="invariants" className="pt-24"><Invariants /></section>
         <section id="batch-b" className="pt-24"><BatchBCheckpoint /></section>
+        <section id="ui-concepts" className="pt-24"><UIConcepts /></section>
       </main>
 
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
