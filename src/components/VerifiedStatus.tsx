@@ -26,7 +26,7 @@ const verifiedChanges = [
 const proofLevels = [
   { area: "One-agent architecture", state: "PROVEN_SOURCE", note: "Canonical source and removal history support one semantic reasoning authority." },
   { area: "Capability registry", state: "PROVEN_SOURCE", note: "Model-visible and executable tool catalogs derive from current capability ownership." },
-  { area: "Static regression", state: "PROVEN_TEST", note: "418 tests plus readiness/runtime truth/release postflight reported PASS." },
+  { area: "Static regression", state: "PROVEN_TEST", note: "422 tests plus readiness/runtime truth/release postflight reported PASS." },
   { area: "Browser relay/CDP", state: "PROVEN_LIVE", note: "Relay :9333 and Chrome CDP :7430 were both reachable in the latest acceptance run." },
   { area: "ChatGPT posting", state: "PARTIAL", note: browserAcceptance.blocker },
   { area: "Restart/exactly-once", state: "NOT_PROVEN", note: "Checkpoint primitives exist; process-loss rediscovery/revalidation/non-duplication remains an acceptance obligation." },
@@ -124,10 +124,79 @@ export default function VerifiedStatus() {
         </div>
       </div>
 
+      {/* Readiness verification banner */}
+      <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-5 mb-8">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center shrink-0">
+            <i className="fa-solid fa-shield-check text-green-400"></i>
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <span className="text-xs font-mono text-green-300 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/30">
+                verify:readiness
+              </span>
+              <span className="text-xs text-gray-500">2026-09-18T00:32:45Z</span>
+              <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/30 font-mono">
+                ALL GUARDS PASS
+              </span>
+            </div>
+            <p className="text-sm text-gray-200 font-medium mb-3">
+              Memory watcher correctness fix: security-rejected candidates no longer emitted as proposals
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div className="rounded-lg bg-white/5 p-2">
+                <div className="text-gray-500">Test Suite</div>
+                <div className="text-green-400 font-mono">422/422</div>
+              </div>
+              <div className="rounded-lg bg-white/5 p-2">
+                <div className="text-gray-500">Watcher Tests</div>
+                <div className="text-green-400 font-mono">4/4</div>
+              </div>
+              <div className="rounded-lg bg-white/5 p-2">
+                <div className="text-gray-500">Resource Policy</div>
+                <div className="text-cyan-400 font-mono">48 entries</div>
+              </div>
+              <div className="rounded-lg bg-white/5 p-2">
+                <div className="text-gray-500">Browser Tools</div>
+                <div className="text-cyan-400 font-mono">6 registered</div>
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/5">
+              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-2">Guards Passed:</p>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  "test:readiness",
+                  "guard:state-root",
+                  "guard:runtime-authority",
+                  "guard:secrets-structure",
+                  "guard:product-surface",
+                  "guard:browser-capability",
+                  "guard:file-adapter",
+                  "guard:resource-policy",
+                  "guard:event-contract",
+                  "guard:import-boundaries",
+                  "release:preflight",
+                ].map((guard) => (
+                  <span key={guard} className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ {guard}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/5">
+              <p className="text-xs text-amber-300">
+                <i className="fa-solid fa-triangle-exclamation mr-1"></i>
+                Status: Changes uncommitted in worktree. No deployment or release performed.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
-          <div className="text-2xl font-bold text-green-400">411+</div>
+          <div className="text-2xl font-bold text-green-400">422</div>
           <div className="text-xs text-gray-400">Tests Passed</div>
         </div>
         <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
@@ -135,8 +204,8 @@ export default function VerifiedStatus() {
           <div className="text-xs text-gray-400">Proven foundations</div>
         </div>
         <div className="rounded-xl bg-purple-500/5 border border-purple-500/20 p-4 text-center">
-          <div className="text-2xl font-bold text-purple-400">4</div>
-          <div className="text-xs text-gray-400">Verified Changes</div>
+          <div className="text-2xl font-bold text-purple-400">11/11</div>
+          <div className="text-xs text-gray-400">Readiness Guards</div>
         </div>
         <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-4 text-center">
           <div className="text-2xl font-bold text-amber-400">PARTIAL</div>

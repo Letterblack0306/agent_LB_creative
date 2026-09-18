@@ -97,7 +97,10 @@ export default function App() {
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
         <p>Brew Agent System — Plan & Implementation Features</p>
         <p className="mt-1 text-gray-600">
-          Source: Letterblack0306/GPT-Knowledge • Brew main at 54673a6 (8 fixes) • Drive reconciliation + BirdEye projection
+          Source: Letterblack0306/GPT-Knowledge • Brew main at 54673a6 (8 fixes) • 422/422 tests • verify:readiness ALL GUARDS PASS
+        </p>
+        <p className="mt-1 text-gray-600 text-xs">
+          Last verified: 2026-09-18T00:32:45Z • Changes uncommitted in worktree
         </p>
       </footer>
     </div>

@@ -28,7 +28,7 @@ export interface BrewGap {
 }
 
 export const brewPlanMeta = {
-  asOf: "2026-09-17",
+  asOf: "2026-09-18",
   sourceHead: "54673a6",
   sourceShort: "54673a6",
   sourceBranch: "main",
@@ -45,6 +45,21 @@ export const brewPlanMeta = {
     message: "Fix 8 concrete issues: renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation",
     filesChanged: 7,
     branchStatus: "main = origin/main (up to date)",
+  },
+  readinessVerification: {
+    timestamp: "2026-09-18T00:32:45.072Z",
+    testCount: 422,
+    testPass: 422,
+    testFail: 0,
+    readinessGuards: 11,
+    readinessGuardsPassed: 11,
+    watcherTests: "4/4",
+    memoryWatcherFix: "Security-rejected candidates no longer emitted as proposals",
+    resourcePolicy: { entries: 48, sensitive: 13, classifications: 8 },
+    browserTools: 6,
+    fileAdapterTools: 5,
+    status: "ALL GUARDS PASS",
+    uncommitted: true,
   },
 };
 
