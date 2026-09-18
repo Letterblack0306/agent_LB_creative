@@ -29,8 +29,8 @@ export interface BrewGap {
 
 export const brewPlanMeta = {
   asOf: "2026-09-18",
-  sourceHead: "54673a6",
-  sourceShort: "54673a6",
+  sourceHead: "dd2794df",
+  sourceShort: "dd2794df",
   sourceBranch: "main",
   sourceRepo: "Letterblack0306/brew",
   gptkHead: "66422535a0011f03cf9cda91aae149f7947b3a57",
@@ -40,14 +40,14 @@ export const brewPlanMeta = {
   architecture: "One persistent reasoning agent; model owns semantic reasoning and tool choice; runtime owns identity, policy, execution, state, evidence, recovery and delivery mechanics.",
   evidenceRule: "Live/runtime evidence outranks source, source outranks docs, docs outrank historical memory/model prior.",
   latestCommit: {
-    hash: "2cbb187d",
+    hash: "dd2794df",
     date: "2026-09-18",
-    message: "docs: record external PR merge boundary — Added PR warning to AGENTS.md, detailed review notes (EXTERNAL_PR_REVIEW_NOTES.md), updated workspace index and changelog",
-    filesChanged: 4,
+    message: "Fix memory guards, secret scanner false positives, and workspace state issues — Replaced debug stubs with real promotion/status endpoints, added canonical memory route aliases, rewrote stale memory guards, removed obsolete .brew-sidecar expectation, fixed secret scanner, stopped UI validation from creating forbidden .brew state.",
+    filesChanged: 8,
     branchStatus: "main = origin/main (up to date), working tree clean",
   },
   previousCommit: {
-    hash: "54673a6",
+    hash: "2cbb187d",
     date: "2026-09-17",
     message: "Fix 8 concrete issues: renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation",
     filesChanged: 7,
