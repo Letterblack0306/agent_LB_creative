@@ -5,7 +5,7 @@ export default function HeroSection() {
   const criticalGaps = openGaps.filter((gap) => gap.severity === "critical").length;
 
   return (
-    <div className="relative overflow-hidden min-h-[85vh] flex items-center justify-center">
+    <div id="overview" className="relative overflow-hidden min-h-[85vh] flex items-center justify-center">
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -45,10 +45,10 @@ export default function HeroSection() {
         <div className="inline-block px-4 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20 mb-4 max-w-2xl">
           <div className="flex items-center gap-2 justify-center mb-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-xs text-emerald-300 font-mono">LATEST: 54673a6 — 8 concrete fixes pushed to main</span>
+            <span className="text-xs text-emerald-300 font-mono">REMOTE SOURCE: {brewPlanMeta.sourceShort} — verified GitHub main</span>
           </div>
           <p className="text-[10px] text-gray-400 font-mono">
-            renderer cwd • CSS reset • waiting-state invariant • chat selectors • verification display • approval formatting • user interruption • semantic observation
+            Any newer local/BirdEye workspace revision must be proven separately; this dashboard does not relabel local state as remote GitHub truth.
           </p>
         </div>
 

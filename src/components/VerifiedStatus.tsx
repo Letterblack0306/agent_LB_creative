@@ -2,24 +2,24 @@ import { browserAcceptance, brewPlanMeta, provenFoundations } from "../data/brew
 
 const verifiedChanges = [
   {
-    commit: "54673a6",
-    classification: "PROVEN_SOURCE_AND_TEST",
-    change: "Fixed 8 concrete issues: renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, and semantic observation. Changes across 7 files in electron/, src/agent/executive/, and test/. Branch main and origin/main both at 54673a6 — up to date.",
+    commit: "c37205cb",
+    classification: "PROVEN_REMOTE_SOURCE",
+    change: "GitHub origin/main is verified at c37205cb: build: refresh runtime UI asset reference. This does not prove a newer local workspace revision.",
   },
   {
     commit: "a8f4425c",
     classification: "PROVEN_SOURCE_AND_TEST",
-    change: "Removed active request-semantic tool preselection from the runner foundation. The canonical reasoning loop now receives the full governed executable registry instead of a regex/token-scored subset. Deleted the obsolete task-tool-selection module, response-decision-layer, and stale runtime build script.",
+    change: "Removed active request-semantic tool preselection from the runner foundation so the primary model sees the governed executable registry.",
   },
   {
     commit: "4a5cb534",
     classification: "PROVEN_SOURCE_AND_REGRESSION_TEST",
-    change: "Added regression coverage that rejects semantic tool preselection, semantic router/planner re-entry into the canonical runner, and tool-selection telemetry being used as an execution capability boundary.",
+    change: "Added regression coverage rejecting semantic tool preselection and semantic router/planner re-entry into the canonical runner.",
   },
   {
     commit: "39da8df9",
     classification: "PROVEN_SOURCE_AND_TEST",
-    change: "Aligned the dynamic prompt tool catalogue with the native tool loop by using describeForModel({ includeUnavailable: false }); the model now sees the governed executable tool set consistently in both context and native tool schemas.",
+    change: "Aligned the model-visible tool catalogue with the native tool loop using the governed executable registry.",
   },
 ];
 
@@ -34,6 +34,7 @@ const proofLevels = [
 ];
 
 const stateClass: Record<string, string> = {
+  PROVEN_REMOTE_SOURCE: "text-cyan-400 bg-cyan-500/10 border-cyan-500/30",
   PROVEN_SOURCE: "text-green-400 bg-green-500/10 border-green-500/30",
   PROVEN_TEST: "text-green-400 bg-green-500/10 border-green-500/30",
   PROVEN_LIVE: "text-cyan-400 bg-cyan-500/10 border-cyan-500/30",
@@ -45,12 +46,12 @@ const stateClass: Record<string, string> = {
 };
 
 const reconciledAuthorities = [
-  { item: "scenario-router.mjs", status: "OBSOLETE", detail: "Removed; no active semantic router in canonical path" },
-  { item: "response-decision-layer.mjs", status: "OBSOLETE", detail: "Removed; model-owned finalization replaces deterministic responder" },
-  { item: "agent-loop.mjs", status: "SUPERSEDED", detail: "Replaced by agent-tool-loop.mjs with model-owned continuation" },
-  { item: "provider-planner.mjs", status: "SUPERSEDED", detail: "Model decides next action; no separate planner authority" },
-  { item: "active-read-agent.mjs", status: "CANONICAL", detail: "Retained as bounded inspection capability under canonical runtime" },
-  { item: "workspace-agent/core", status: "CANONICAL", detail: "Reduced to services (retrieval-index, skill-fetcher); no independent planning brain" },
+  { item: "scenario-router.mjs", status: "OBSOLETE", detail: "Removed; no active semantic router in the canonical natural-language path." },
+  { item: "response-decision-layer.mjs", status: "OBSOLETE", detail: "Removed; model-owned finalization replaces deterministic response authority." },
+  { item: "agent-loop.mjs", status: "SUPERSEDED", detail: "Historical secondary loop; canonical continuation is agent-tool-loop + brew-runner." },
+  { item: "provider-planner.mjs", status: "OBSOLETE", detail: "Absent on current Brew main; semantic planning/tool choice remains model-owned." },
+  { item: "active-read-agent.mjs", status: "SUPERSEDED", detail: "Absent on current Brew main; read/discovery behavior is retained through current context/read tools and capability execution." },
+  { item: "workspace-agent/core", status: "CANONICAL", detail: "Retained only as bounded services such as retrieval/index and skill support, not an independent planning brain." },
 ];
 
 export default function VerifiedStatus() {
@@ -62,64 +63,31 @@ export default function VerifiedStatus() {
             Verified Status
           </span>
         </h2>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          From <code className="text-green-300 bg-green-500/10 px-1.5 py-0.5 rounded text-sm">status.json</code> — 
-          latest verified at commit <code className="text-gray-300">54673a6</code> (2026-09-17).
+        <p className="text-gray-400 max-w-3xl mx-auto">
+          Verified remote source baseline: <code className="text-green-300 bg-green-500/10 px-1.5 py-0.5 rounded text-sm">{brewPlanMeta.sourceRepo}@{brewPlanMeta.sourceShort}</code>.
+          Local/BirdEye workspace state is a separate evidence layer and is not inferred from GitHub.
         </p>
       </div>
 
-      {/* Latest commit banner */}
-      <div className="rounded-xl bg-emerald-500/5 border border-emerald-500/20 p-5 mb-8">
+      {/* Verified remote baseline */}
+      <div className="rounded-xl bg-cyan-500/5 border border-cyan-500/20 p-5 mb-8">
         <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0">
-            <i className="fa-solid fa-code-commit text-emerald-400"></i>
+          <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center shrink-0">
+            <i className="fa-solid fa-code-commit text-cyan-400"></i>
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-xs font-mono text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
-                54673a6
+          <div>
+            <div className="flex items-center gap-2 flex-wrap mb-2">
+              <span className="text-xs font-mono text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/30">
+                {brewPlanMeta.sourceShort}
               </span>
-              <span className="text-xs text-gray-500">2026-09-17</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/30 font-mono">
-                MAIN = ORIGIN/MAIN — UP TO DATE
+              <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-mono">
+                GITHUB ORIGIN/MAIN
               </span>
             </div>
-            <p className="text-sm text-gray-200 font-medium mb-2">
-              Fix 8 concrete issues: renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation
+            <p className="text-sm text-gray-200">build: refresh runtime UI asset reference</p>
+            <p className="text-xs text-gray-500 mt-2">
+              This is remote repository truth. A newer local workspace revision must be proven through BirdEye/local Git evidence before the dashboard adopts it.
             </p>
-            <div className="flex flex-wrap gap-2 mb-3">
-              <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 font-mono">7 files changed</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 font-mono">electron/Index.html</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 font-mono">electron/agent-activity.css</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 font-mono">electron/main.js</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 font-mono">electron/preload.js</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 font-mono">src/agent/executive/agent-runtime-service.js</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 font-mono">electron/chrome-launcher.js</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-400 border border-white/10 font-mono">test/electron-components-smoke.js</span>
-            </div>
-            <div className="mt-3 pt-3 border-t border-white/5">
-              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-2">Plan Impact:</p>
-              <div className="flex flex-wrap gap-1.5">
-                <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20" title="P0 Correctness: provider-result-invariant">
-                  waiting-state → P0 invariant
-                </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20" title="Authority: canonical-query">
-                  chat selectors → canonical query
-                </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20" title="P1 Runtime: recovery">
-                  user interruption → P1 recovery
-                </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20" title="Evidence pipeline">
-                  semantic observation → evidence
-                </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20" title="Validation">
-                  verification display → validation
-                </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20" title="Policy">
-                  approval formatting → policy
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -127,7 +95,7 @@ export default function VerifiedStatus() {
       {/* Summary cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
-          <div className="text-2xl font-bold text-green-400">411+</div>
+          <div className="text-2xl font-bold text-green-400">418</div>
           <div className="text-xs text-gray-400">Tests Passed</div>
         </div>
         <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
@@ -135,8 +103,8 @@ export default function VerifiedStatus() {
           <div className="text-xs text-gray-400">Proven foundations</div>
         </div>
         <div className="rounded-xl bg-purple-500/5 border border-purple-500/20 p-4 text-center">
-          <div className="text-2xl font-bold text-purple-400">4</div>
-          <div className="text-xs text-gray-400">Verified Changes</div>
+          <div className="text-2xl font-bold text-purple-400">{verifiedChanges.length}</div>
+          <div className="text-xs text-gray-400">Verified change references</div>
         </div>
         <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-4 text-center">
           <div className="text-2xl font-bold text-amber-400">PARTIAL</div>

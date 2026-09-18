@@ -28,9 +28,9 @@ export interface BrewGap {
 }
 
 export const brewPlanMeta = {
-  asOf: "2026-09-17",
-  sourceHead: "54673a6",
-  sourceShort: "54673a6",
+  asOf: "2026-09-18",
+  sourceHead: "c37205cbd96d5e0836f95032bddd3a314cee8063",
+  sourceShort: "c37205cb",
   sourceBranch: "main",
   sourceRepo: "Letterblack0306/brew",
   gptkHead: "66422535a0011f03cf9cda91aae149f7947b3a57",
@@ -40,11 +40,11 @@ export const brewPlanMeta = {
   architecture: "One persistent reasoning agent; model owns semantic reasoning and tool choice; runtime owns identity, policy, execution, state, evidence, recovery and delivery mechanics.",
   evidenceRule: "Live/runtime evidence outranks source, source outranks docs, docs outrank historical memory/model prior.",
   latestCommit: {
-    hash: "54673a6",
+    hash: "c37205cb",
     date: "2026-09-17",
-    message: "Fix 8 concrete issues: renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation",
-    filesChanged: 7,
-    branchStatus: "main = origin/main (up to date)",
+    message: "build: refresh runtime UI asset reference",
+    filesChanged: 1,
+    branchStatus: "GitHub origin/main verified at c37205cb; local workspace state requires BirdEye/local evidence",
   },
 };
 

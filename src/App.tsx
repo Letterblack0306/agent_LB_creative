@@ -10,6 +10,7 @@ import GenuineGaps from "./components/GenuineGaps";
 import BirdEyeSection from "./components/BirdEyeSection";
 import BirdEyeQueryResults from "./components/BirdEyeQueryResults";
 import HeroSection from "./components/HeroSection";
+import { brewPlanMeta } from "./data/brewPlanning";
 
 type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b";
 
@@ -96,8 +97,8 @@ export default function App() {
 
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
         <p>Brew Agent System — Plan & Implementation Features</p>
-        <p className="mt-1 text-gray-600">
-          Source: Letterblack0306/GPT-Knowledge • Brew main at 54673a6 (8 fixes) • Drive reconciliation + BirdEye projection
+        <p className="mt-1 text-gray-600 font-mono text-xs">
+          Source: {brewPlanMeta.sourceRepo}@{brewPlanMeta.sourceShort} • GPT-K {brewPlanMeta.gptkShort} • Drive reconciliation + BirdEye projection
         </p>
       </footer>
     </div>
