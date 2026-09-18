@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { brewPlanMeta } from "../data/brewPlanning";
 
 // ============================================================================
 // CONCEPT 1: TERMINAL HUD
@@ -86,7 +87,7 @@ function TerminalHUD() {
       {/* Status bar */}
       <div className="flex items-center justify-between px-4 py-2 bg-black/40 border-t border-cyan-500/10 text-[10px] font-mono">
         <span className="text-green-400">● connected</span>
-        <span className="text-gray-500">qwen3-vl-8b · 422 tests · 11 guards</span>
+        <span className="text-gray-500">qwen3-vl-8b · {brewPlanMeta.readinessVerification.testPass} tests · {brewPlanMeta.readinessVerification.readinessGuards} guards</span>
         <span className="text-cyan-400/60">latency: 42ms</span>
       </div>
     </div>

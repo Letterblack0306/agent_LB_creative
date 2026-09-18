@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { brewPlanMeta } from "../data/brewPlanning";
 
 // ============================================================================
 // BREW UI - Letterblack Brand-Aligned Design
@@ -255,11 +256,11 @@ export default function BrewUI() {
                 </div>
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 text-center">
-                    <div className="text-2xl font-bold text-white">422</div>
+                    <div className="text-2xl font-bold text-white">{brewPlanMeta.readinessVerification.testPass}</div>
                     <div className="text-[10px] text-gray-500 mt-1">Tests Passed</div>
                   </div>
                   <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 text-center">
-                    <div className="text-2xl font-bold text-emerald-400">11/11</div>
+                    <div className="text-2xl font-bold text-emerald-400">{brewPlanMeta.readinessVerification.readinessGuardsPassed}/{brewPlanMeta.readinessVerification.readinessGuards}</div>
                     <div className="text-[10px] text-gray-500 mt-1">Guards Pass</div>
                   </div>
                   <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4 text-center">
@@ -273,7 +274,7 @@ export default function BrewUI() {
                     {[
                       { status: "success", text: "verify:readiness completed", time: "just now" },
                       { status: "success", text: "memory watcher fix verified", time: "2m ago" },
-                      { status: "success", text: "422/422 tests passed", time: "3m ago" },
+                      { status: "success", text: `${brewPlanMeta.readinessVerification.testPass}/${brewPlanMeta.readinessVerification.testCount} tests passed`, time: "3m ago" },
                     ].map((log, i) => (
                       <div key={i} className="flex items-center gap-3 text-xs">
                         <span className={`w-1.5 h-1.5 rounded-full ${log.status === "success" ? "bg-emerald-400" : "bg-red-400"}`}></span>
@@ -294,7 +295,7 @@ export default function BrewUI() {
               <span>·</span>
               <span>main branch</span>
               <span>·</span>
-              <span>422 tests</span>
+              <span>{brewPlanMeta.readinessVerification.testCount} tests</span>
             </div>
             <div className="text-[10px] text-gray-600">
               Letterblack · Dubai

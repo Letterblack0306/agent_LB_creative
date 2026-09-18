@@ -51,7 +51,7 @@ export default function HeroSection() {
             git.status • git.diff_summary • shell-safe • workspace-aware • 2/2 focused tests
           </p>
           <p className="text-[10px] text-green-400 font-mono">
-            2026-09-18 6:28 PM • 421/421 tests • 10/10 readiness • working tree clean
+            {brewPlanMeta.latestCommit.date} • {brewPlanMeta.readinessVerification.testPass}/{brewPlanMeta.readinessVerification.testCount} tests • {brewPlanMeta.readinessVerification.readinessGuardsPassed}/{brewPlanMeta.readinessVerification.readinessGuards} readiness • working tree clean
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export default function HeroSection() {
             <div className="text-[10px] text-gray-500 uppercase tracking-wider">Critical proof gaps</div>
           </div>
           <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-xl font-bold text-green-300">418</div>
+            <div className="text-xl font-bold text-green-300">{brewPlanMeta.readinessVerification.testPass}</div>
             <div className="text-[10px] text-gray-500 uppercase tracking-wider">Tests passed</div>
           </div>
           <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/10">

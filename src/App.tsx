@@ -12,6 +12,7 @@ import BirdEyeQueryResults from "./components/BirdEyeQueryResults";
 import HeroSection from "./components/HeroSection";
 import UIConcepts from "./components/UIConcepts";
 import BrewUI from "./components/BrewUI";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { brewPlanMeta } from "./data/brewPlanning";
 
 type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b" | "ui-concepts" | "brew-ui";
@@ -43,6 +44,7 @@ export default function App() {
   ];
 
   return (
+    <ErrorBoundary>
     <div className="min-h-screen bg-[#0a0e1a] text-gray-100 font-sans">
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -111,5 +113,6 @@ export default function App() {
         </p>
       </footer>
     </div>
+    </ErrorBoundary>
   );
 }
