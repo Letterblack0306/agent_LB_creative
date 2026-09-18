@@ -40,17 +40,17 @@ export const brewPlanMeta = {
   architecture: "One persistent reasoning agent; model owns semantic reasoning and tool choice; runtime owns identity, policy, execution, state, evidence, recovery and delivery mechanics.",
   evidenceRule: "Live/runtime evidence outranks source, source outranks docs, docs outrank historical memory/model prior.",
   latestCommit: {
-    hash: "3a4b1082",
+    hash: "7a16b226",
     date: "2026-09-18",
-    message: "Root-to-leaf workspace cleanup — Scanned all nested levels, verified 178 runtime files with no unresolved imports, rebuilt runtime-ui from authoritative app/, removed 6 disposable artifacts (npm-install-cline logs, stale release-proof JSONs), corrected heartbeat doctor wording, refreshed workspace index to 1,210 files.",
-    filesChanged: 10,
+    message: "docs: classify workspace code health — Audited and recorded results in WORKSPACE_CODE_CLASSIFICATION.md. No proven broken runtime code. 4 incomplete/quarantined files identified. 3 empty files (2 .gitkeep, 1 historical archive). 178 reachable runtime files structurally clean with zero unresolved imports.",
+    filesChanged: 1,
     branchStatus: "main = origin/main (up to date), working tree clean",
   },
   previousCommit: {
-    hash: "dd2794df",
+    hash: "3a4b1082",
     date: "2026-09-18",
-    message: "Fix memory guards, secret scanner, workspace state issues",
-    filesChanged: 8,
+    message: "Root-to-leaf workspace cleanup, 178 runtime files verified",
+    filesChanged: 10,
   },
   readinessVerification: {
     timestamp: "2026-09-18T00:32:45.072Z",
