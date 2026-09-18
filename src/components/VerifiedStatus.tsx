@@ -43,6 +43,30 @@ const proofLevels = [
   { area: "Installed runtime identity", state: "NOT_PROVEN", note: "Needs exact source -> deployed build -> live runtime identity and restart proof." },
 ];
 
+const workspaceScanIssues = [
+  {
+    id: "memory-guards-stale",
+    severity: "DEFINITE",
+    title: "Memory guards are stale and broken",
+    detail: "Three memory validation scripts still reference the removed legacy file brew/start.js: validate-memory-promotion.mjs, guard-memory-chat.mjs, guard-memory-leakage.mjs. They fail with ENOENT: brew/brew/start.js. Brew's canonical authority is now brew/agent/orchestrator-server.mjs and brew/runtime/server/gateway-server.mjs.",
+    action: "Update all three memory guards to reference current gateway/orchestrator authorities.",
+  },
+  {
+    id: "memory-sidecar-obsolete",
+    severity: "DEFINITE",
+    title: "Obsolete memory sidecar expectation",
+    detail: "validate-memory-promotion.mjs expects .brew-sidecar/memory-marks/ which conflicts with the current external state-root design under ~/.Brew/state.",
+    action: "Revise validate-memory-promotion.mjs to use current ~/.Brew/state paths.",
+  },
+  {
+    id: "secret-scanner-false-positives",
+    severity: "DEFINITE",
+    title: "Secret scanner has false-positive blockers",
+    detail: "scan-secret-risk.mjs flags test fixtures such as token: 'active-claim-secret' and apiKey: 'sk-secret-value-1234567890'. These are test literals, not live credentials, but the scanner exits with failure instead of classifying them as test fixtures.",
+    action: "Update scan-secret-risk.mjs to classify test fixtures correctly and not exit with failure.",
+  },
+];
+
 const stateClass: Record<string, string> = {
   PROVEN_REMOTE_SOURCE: "text-cyan-400 bg-cyan-500/10 border-cyan-500/30",
   PROVEN_SOURCE: "text-green-400 bg-green-500/10 border-green-500/30",
@@ -172,7 +196,7 @@ export default function VerifiedStatus() {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">
         <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
           <div className="text-2xl font-bold text-green-400">422</div>
           <div className="text-xs text-gray-400">Tests Passed</div>
@@ -188,6 +212,10 @@ export default function VerifiedStatus() {
         <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-4 text-center">
           <div className="text-2xl font-bold text-amber-400">PARTIAL</div>
           <div className="text-xs text-gray-400">Live posting</div>
+        </div>
+        <div className="rounded-xl bg-red-500/5 border border-red-500/20 p-4 text-center">
+          <div className="text-2xl font-bold text-red-400">3</div>
+          <div className="text-xs text-gray-400">Scan Issues</div>
         </div>
       </div>
 
@@ -216,6 +244,28 @@ export default function VerifiedStatus() {
                 <span className={`text-[10px] px-2 py-0.5 rounded border font-mono ${stateClass[item.status]}`}>{item.status}</span>
               </div>
               <p className="text-xs text-gray-500 leading-relaxed">{item.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Workspace Scan Issues */}
+      <div className="mt-10 mb-8">
+        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Workspace Scan Issues (2026-09-18 5:15 PM)</h3>
+        <div className="space-y-3">
+          {workspaceScanIssues.map((issue) => (
+            <div key={issue.id} className="rounded-xl bg-red-500/5 border border-red-500/20 p-4">
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <h4 className="text-sm font-medium text-gray-200">{issue.title}</h4>
+                <span className="text-[10px] px-2 py-0.5 rounded border font-mono bg-red-500/10 text-red-400 border-red-500/30">
+                  {issue.severity}
+                </span>
+              </div>
+              <p className="text-xs text-gray-400 mb-2">{issue.detail}</p>
+              <p className="text-xs text-emerald-400">
+                <i className="fa-solid fa-arrow-right mr-1"></i>
+                {issue.action}
+              </p>
             </div>
           ))}
         </div>

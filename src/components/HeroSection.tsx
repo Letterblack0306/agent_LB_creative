@@ -55,6 +55,16 @@ export default function HeroSection() {
           </p>
         </div>
 
+        <div className="inline-block px-4 py-3 rounded-xl bg-red-500/5 border border-red-500/20 mb-8 max-w-2xl">
+          <div className="flex items-center gap-2 justify-center mb-1">
+            <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+            <span className="text-xs text-red-300 font-mono">WORKSPACE SCAN: 3 DEFINITE ISSUES IDENTIFIED</span>
+          </div>
+          <p className="text-[10px] text-gray-400 font-mono">
+            Memory guards stale • Memory sidecar obsolete • Secret scanner false positives
+          </p>
+        </div>
+
         <div className="inline-block px-4 py-3 rounded-xl bg-amber-500/5 border border-amber-500/20 mb-8 max-w-2xl">
           <p className="text-xs text-amber-300/80 font-mono leading-relaxed">
             CURRENT: MODEL_OWNED_REASONING_PATH_ESTABLISHED • SEMANTIC_TOOL_PRESELECTION_REMOVED •
