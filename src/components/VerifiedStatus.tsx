@@ -2,6 +2,11 @@ import { browserAcceptance, brewPlanMeta, provenFoundations } from "../data/brew
 
 const verifiedChanges = [
   {
+    commit: "dd2794df",
+    classification: "PROVEN_PUSHED",
+    change: "Fix memory guards, secret scanner false positives, and workspace state issues — Replaced debug stubs with real promotion/status endpoints, added canonical memory route aliases, rewrote stale memory guards, removed obsolete .brew-sidecar expectation, fixed secret scanner, stopped UI validation from creating forbidden .brew state. All validation passing.",
+  },
+  {
     commit: "2cbb187d",
     classification: "PROVEN_PUSHED",
     change: "docs: record external PR merge boundary — Added PR warning to AGENTS.md, detailed review notes (EXTERNAL_PR_REVIEW_NOTES.md), updated workspace index and changelog. Pushed to origin/main, working tree clean.",
@@ -46,24 +51,24 @@ const proofLevels = [
 const workspaceScanIssues = [
   {
     id: "memory-guards-stale",
-    severity: "DEFINITE",
-    title: "Memory guards are stale and broken",
-    detail: "Three memory validation scripts still reference the removed legacy file brew/start.js: validate-memory-promotion.mjs, guard-memory-chat.mjs, guard-memory-leakage.mjs. They fail with ENOENT: brew/brew/start.js. Brew's canonical authority is now brew/agent/orchestrator-server.mjs and brew/runtime/server/gateway-server.mjs.",
-    action: "Update all three memory guards to reference current gateway/orchestrator authorities.",
+    severity: "RESOLVED",
+    title: "Memory guards rewritten",
+    detail: "Three memory validation scripts (validate-memory-promotion.mjs, guard-memory-chat.mjs, guard-memory-leakage.mjs) were referencing the removed legacy file brew/start.js. All three have been rewritten to reference current gateway/orchestrator authorities.",
+    action: "✅ Fixed in dd2794df — Memory guards now reference brew/agent/orchestrator-server.mjs and brew/runtime/server/gateway-server.mjs",
   },
   {
     id: "memory-sidecar-obsolete",
-    severity: "DEFINITE",
-    title: "Obsolete memory sidecar expectation",
-    detail: "validate-memory-promotion.mjs expects .brew-sidecar/memory-marks/ which conflicts with the current external state-root design under ~/.Brew/state.",
-    action: "Revise validate-memory-promotion.mjs to use current ~/.Brew/state paths.",
+    severity: "RESOLVED",
+    title: "Memory sidecar expectation removed",
+    detail: "validate-memory-promotion.mjs was expecting .brew-sidecar/memory-marks/ which conflicted with the current external state-root design under ~/.Brew/state.",
+    action: "✅ Fixed in dd2794df — Obsolete .brew-sidecar/memory-marks expectation removed",
   },
   {
     id: "secret-scanner-false-positives",
-    severity: "DEFINITE",
-    title: "Secret scanner has false-positive blockers",
-    detail: "scan-secret-risk.mjs flags test fixtures such as token: 'active-claim-secret' and apiKey: 'sk-secret-value-1234567890'. These are test literals, not live credentials, but the scanner exits with failure instead of classifying them as test fixtures.",
-    action: "Update scan-secret-risk.mjs to classify test fixtures correctly and not exit with failure.",
+    severity: "RESOLVED",
+    title: "Secret scanner false positives fixed",
+    detail: "scan-secret-risk.mjs was flagging test fixtures such as token: 'active-claim-secret' and apiKey: 'sk-secret-value-1234567890' as real secrets.",
+    action: "✅ Fixed in dd2794df — Secret scanner now correctly classifies test fixtures",
   },
 ];
 
@@ -213,9 +218,9 @@ export default function VerifiedStatus() {
           <div className="text-2xl font-bold text-amber-400">PARTIAL</div>
           <div className="text-xs text-gray-400">Live posting</div>
         </div>
-        <div className="rounded-xl bg-red-500/5 border border-red-500/20 p-4 text-center">
-          <div className="text-2xl font-bold text-red-400">3</div>
-          <div className="text-xs text-gray-400">Scan Issues</div>
+        <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
+          <div className="text-2xl font-bold text-green-400">3/3</div>
+          <div className="text-xs text-gray-400">Scan Issues Fixed</div>
         </div>
       </div>
 
@@ -249,21 +254,21 @@ export default function VerifiedStatus() {
         </div>
       </div>
 
-      {/* Workspace Scan Issues */}
+      {/* Workspace Scan Issues - Now Resolved */}
       <div className="mt-10 mb-8">
-        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Workspace Scan Issues (2026-09-18 5:15 PM)</h3>
+        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Workspace Scan Issues — Resolved (2026-09-18)</h3>
         <div className="space-y-3">
           {workspaceScanIssues.map((issue) => (
-            <div key={issue.id} className="rounded-xl bg-red-500/5 border border-red-500/20 p-4">
+            <div key={issue.id} className="rounded-xl bg-green-500/5 border border-green-500/20 p-4">
               <div className="flex flex-wrap items-center gap-3 mb-2">
                 <h4 className="text-sm font-medium text-gray-200">{issue.title}</h4>
-                <span className="text-[10px] px-2 py-0.5 rounded border font-mono bg-red-500/10 text-red-400 border-red-500/30">
+                <span className="text-[10px] px-2 py-0.5 rounded border font-mono bg-green-500/10 text-green-400 border-green-500/30">
                   {issue.severity}
                 </span>
               </div>
               <p className="text-xs text-gray-400 mb-2">{issue.detail}</p>
               <p className="text-xs text-emerald-400">
-                <i className="fa-solid fa-arrow-right mr-1"></i>
+                <i className="fa-solid fa-check-circle mr-1"></i>
                 {issue.action}
               </p>
             </div>
