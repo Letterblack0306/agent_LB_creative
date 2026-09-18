@@ -12,10 +12,11 @@ import BirdEyeQueryResults from "./components/BirdEyeQueryResults";
 import HeroSection from "./components/HeroSection";
 import UIConcepts from "./components/UIConcepts";
 import BrewUI from "./components/BrewUI";
+import ArchitectureClarification from "./components/ArchitectureClarification";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { brewPlanMeta } from "./data/brewPlanning";
 
-type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b" | "ui-concepts" | "brew-ui";
+type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b" | "ui-concepts" | "brew-ui" | "architecture-clarification";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("overview");
@@ -31,6 +32,7 @@ export default function App() {
     { id: "overview", label: "Overview", icon: "fa-compass" },
     { id: "plan", label: "Specific Plan", icon: "fa-diagram-project" },
     { id: "status", label: "Verified Status", icon: "fa-circle-check" },
+    { id: "architecture-clarification", label: "Architecture Decision", icon: "fa-lightbulb" },
     { id: "drive", label: "Drive Reconciliation", icon: "fa-folder-open" },
     { id: "gaps", label: "Gaps & Gates", icon: "fa-triangle-exclamation" },
     { id: "birdeye", label: "BirdEye MCP", icon: "fa-eye" },
@@ -91,6 +93,7 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <section id="plan" className="pt-24"><PlanGraph /></section>
         <section id="status" className="pt-24"><VerifiedStatus /></section>
+        <section id="architecture-clarification" className="pt-24"><ArchitectureClarification /></section>
         <section id="drive" className="pt-24"><DriveReconciliation /></section>
         <section id="gaps" className="pt-24"><GenuineGaps /></section>
         <section id="birdeye" className="pt-24"><BirdEyeSection /></section>
