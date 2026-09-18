@@ -29,8 +29,8 @@ export interface BrewGap {
 
 export const brewPlanMeta = {
   asOf: "2026-09-18",
-  sourceHead: "dd2794df",
-  sourceShort: "dd2794df",
+  sourceHead: "722fc238",
+  sourceShort: "722fc238",
   sourceBranch: "main",
   sourceRepo: "Letterblack0306/brew",
   gptkHead: "66422535a0011f03cf9cda91aae149f7947b3a57",
@@ -40,17 +40,17 @@ export const brewPlanMeta = {
   architecture: "One persistent reasoning agent; model owns semantic reasoning and tool choice; runtime owns identity, policy, execution, state, evidence, recovery and delivery mechanics.",
   evidenceRule: "Live/runtime evidence outranks source, source outranks docs, docs outrank historical memory/model prior.",
   latestCommit: {
-    hash: "7a16b226",
+    hash: "722fc238",
     date: "2026-09-18",
-    message: "docs: classify workspace code health — Audited and recorded results in WORKSPACE_CODE_CLASSIFICATION.md. No proven broken runtime code. 4 incomplete/quarantined files identified. 3 empty files (2 .gitkeep, 1 historical archive). 178 reachable runtime files structurally clean with zero unresolved imports.",
-    filesChanged: 1,
+    message: "Add canonical read-only Git capabilities — git.status and git.diff_summary exposed through capability registry. Shell-safe, workspace/repository-aware, explicitly unavailable outside Git repos. Covered by focused tests. Git write operations intentionally not added (require explicit governance).",
+    filesChanged: 5,
     branchStatus: "main = origin/main (up to date), working tree clean",
   },
   previousCommit: {
-    hash: "3a4b1082",
+    hash: "7a16b226",
     date: "2026-09-18",
-    message: "Root-to-leaf workspace cleanup, 178 runtime files verified",
-    filesChanged: 10,
+    message: "docs: classify workspace code health",
+    filesChanged: 1,
   },
   readinessVerification: {
     timestamp: "2026-09-18T00:32:45.072Z",

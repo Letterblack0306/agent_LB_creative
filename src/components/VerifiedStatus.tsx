@@ -2,6 +2,11 @@ import { browserAcceptance, brewPlanMeta, provenFoundations } from "../data/brew
 
 const verifiedChanges = [
   {
+    commit: "722fc238",
+    classification: "PROVEN_SOURCE_AND_TEST",
+    change: "Add canonical read-only Git capabilities — git.status and git.diff_summary exposed through capability registry. Shell-safe, workspace/repository-aware, explicitly unavailable outside Git repos. Covered by 2/2 focused tests. Git write operations intentionally not added (require explicit governance and approval). 421/421 tests passing, 10/10 readiness guards.",
+  },
+  {
     commit: "7a16b226",
     classification: "PROVEN_PUSHED",
     change: "docs: classify workspace code health — Audited and recorded results in WORKSPACE_CODE_CLASSIFICATION.md. No proven broken runtime code. 4 incomplete/quarantined files identified (fast-context.mjs, http/server.mjs, not-implemented-module.mjs, subagent-orchestrator.mjs). 3 empty files (2 .gitkeep, 1 historical archive). 178 reachable runtime files structurally clean with zero unresolved imports.",

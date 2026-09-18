@@ -45,13 +45,13 @@ export default function HeroSection() {
         <div className="inline-block px-4 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20 mb-8 max-w-2xl">
           <div className="flex items-center gap-2 justify-center mb-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-xs text-emerald-300 font-mono">LATEST: 7a16b226 — Workspace code health classification</span>
+            <span className="text-xs text-emerald-300 font-mono">LATEST: 722fc238 — Canonical read-only Git capabilities</span>
           </div>
           <p className="text-[10px] text-gray-400 font-mono mb-1">
-            178 structurally clean files • 4 incomplete/quarantined • 3 empty • 0 broken
+            git.status • git.diff_summary • shell-safe • workspace-aware • 2/2 focused tests
           </p>
           <p className="text-[10px] text-green-400 font-mono">
-            2026-09-18 • All validation passing • working tree clean • pushed to origin/main
+            2026-09-18 6:28 PM • 421/421 tests • 10/10 readiness • working tree clean
           </p>
         </div>
 
