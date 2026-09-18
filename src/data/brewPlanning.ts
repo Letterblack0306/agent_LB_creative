@@ -40,11 +40,17 @@ export const brewPlanMeta = {
   architecture: "One persistent reasoning agent; model owns semantic reasoning and tool choice; runtime owns identity, policy, execution, state, evidence, recovery and delivery mechanics.",
   evidenceRule: "Live/runtime evidence outranks source, source outranks docs, docs outrank historical memory/model prior.",
   latestCommit: {
+    hash: "2cbb187d",
+    date: "2026-09-18",
+    message: "docs: record external PR merge boundary — Added PR warning to AGENTS.md, detailed review notes (EXTERNAL_PR_REVIEW_NOTES.md), updated workspace index and changelog",
+    filesChanged: 4,
+    branchStatus: "main = origin/main (up to date), working tree clean",
+  },
+  previousCommit: {
     hash: "54673a6",
     date: "2026-09-17",
     message: "Fix 8 concrete issues: renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation",
     filesChanged: 7,
-    branchStatus: "main = origin/main (up to date)",
   },
   readinessVerification: {
     timestamp: "2026-09-18T00:32:45.072Z",

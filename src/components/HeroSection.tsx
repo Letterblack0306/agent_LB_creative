@@ -45,13 +45,13 @@ export default function HeroSection() {
         <div className="inline-block px-4 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20 mb-4 max-w-2xl">
           <div className="flex items-center gap-2 justify-center mb-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-xs text-emerald-300 font-mono">LATEST: 54673a6 — 8 concrete fixes • verify:readiness ALL GUARDS PASS</span>
+            <span className="text-xs text-emerald-300 font-mono">LATEST: 2cbb187d — docs: record external PR merge boundary</span>
           </div>
           <p className="text-[10px] text-gray-400 font-mono mb-1">
-            renderer cwd • CSS reset • waiting-state invariant • chat selectors • verification display • approval formatting • user interruption • semantic observation
+            AGENTS.md • EXTERNAL_PR_REVIEW_NOTES.md • ACTIVE_CHANGELOG.md • WORKSPACE_INDEX.json
           </p>
           <p className="text-[10px] text-green-400 font-mono">
-            422/422 tests • 11/11 readiness guards • memory watcher fix verified
+            2026-09-18 5:09 PM • working tree clean • pushed to origin/main
           </p>
         </div>
 

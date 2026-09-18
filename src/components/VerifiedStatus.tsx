@@ -2,6 +2,16 @@ import { browserAcceptance, brewPlanMeta, provenFoundations } from "../data/brew
 
 const verifiedChanges = [
   {
+    commit: "2cbb187d",
+    classification: "PROVEN_PUSHED",
+    change: "docs: record external PR merge boundary — Added PR warning to AGENTS.md, detailed review notes (EXTERNAL_PR_REVIEW_NOTES.md), updated workspace index and changelog. Pushed to origin/main, working tree clean.",
+  },
+  {
+    commit: "54673a6",
+    classification: "PROVEN_SOURCE_AND_TEST",
+    change: "Fixed 8 concrete issues: renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation.",
+  },
+  {
     commit: "c37205cb",
     classification: "PROVEN_REMOTE_SOURCE",
     change: "GitHub origin/main is verified at c37205cb: build: refresh runtime UI asset reference. This does not prove a newer local workspace revision.",

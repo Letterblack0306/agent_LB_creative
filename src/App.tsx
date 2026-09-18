@@ -104,10 +104,10 @@ export default function App() {
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
         <p>Brew Agent System — Plan & Implementation Features</p>
         <p className="mt-1 text-gray-600">
-          Source: Letterblack0306/GPT-Knowledge • Brew main at 54673a6 (8 fixes) • 422/422 tests • verify:readiness ALL GUARDS PASS
+          Source: Letterblack0306/GPT-Knowledge • Brew main at 2cbb187d (docs: external PR merge boundary) • 422/422 tests • ALL GUARDS PASS
         </p>
         <p className="mt-1 text-gray-600 text-xs">
-          Last verified: 2026-09-18T00:32:45Z • Changes uncommitted in worktree
+          Last verified: 2026-09-18 5:09 PM • Working tree clean • Pushed to origin/main
         </p>
       </footer>
     </div>
