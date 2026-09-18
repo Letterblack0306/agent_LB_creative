@@ -2,6 +2,11 @@ import { browserAcceptance, brewPlanMeta, provenFoundations } from "../data/brew
 
 const verifiedChanges = [
   {
+    commit: "3a4b1082",
+    classification: "PROVEN_PUSHED",
+    change: "Root-to-leaf workspace cleanup — Scanned all nested workspace levels, verified 178 runtime files with no unresolved imports or active legacy authorities, rebuilt runtime-ui from authoritative app/, removed 6 disposable artifacts (npm-install-cline logs, stale release-proof JSONs), corrected heartbeat doctor wording, refreshed workspace index to 1,210 files. All validation passing.",
+  },
+  {
     commit: "dd2794df",
     classification: "PROVEN_PUSHED",
     change: "Fix memory guards, secret scanner false positives, and workspace state issues — Replaced debug stubs with real promotion/status endpoints, added canonical memory route aliases, rewrote stale memory guards, removed obsolete .brew-sidecar expectation, fixed secret scanner, stopped UI validation from creating forbidden .brew state. All validation passing.",

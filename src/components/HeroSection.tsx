@@ -45,13 +45,13 @@ export default function HeroSection() {
         <div className="inline-block px-4 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20 mb-8 max-w-2xl">
           <div className="flex items-center gap-2 justify-center mb-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-xs text-emerald-300 font-mono">LATEST: dd2794df — Fix memory guards, secret scanner, workspace state</span>
+            <span className="text-xs text-emerald-300 font-mono">LATEST: 3a4b1082 — Root-to-leaf workspace cleanup</span>
           </div>
           <p className="text-[10px] text-gray-400 font-mono mb-1">
-            Memory guards rewritten • Secret scanner fixed • .brew-sidecar removed • Route aliases added
+            178 runtime files verified • 6 disposable artifacts removed • runtime-ui rebuilt • workspace index: 1,210 files
           </p>
           <p className="text-[10px] text-green-400 font-mono">
-            2026-09-18 • All validation passing • working tree clean • pushed to origin/main
+            2026-09-18 5:50 PM • All validation passing • working tree clean • pushed to origin/main
           </p>
         </div>
 
