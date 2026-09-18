@@ -51,7 +51,7 @@ export default function HeroSection() {
             git.status • git.diff_summary • shell-safe • workspace-aware • 2/2 focused tests
           </p>
           <p className="text-[10px] text-green-400 font-mono">
-            {brewPlanMeta.latestCommit.date} • {brewPlanMeta.readinessVerification.testPass}/{brewPlanMeta.readinessVerification.testCount} tests • {brewPlanMeta.readinessVerification.readinessGuardsPassed}/{brewPlanMeta.readinessVerification.readinessGuards} readiness • working tree clean
+            {brewPlanMeta.latestCommit.date} • {brewPlanMeta.readinessVerification.testPass}/{brewPlanMeta.readinessVerification.testCount} tests • {brewPlanMeta.readinessVerification.rootTests} root tests • {brewPlanMeta.readinessVerification.readinessGuardsPassed}/{brewPlanMeta.readinessVerification.readinessGuards} readiness • working tree clean
           </p>
         </div>
 

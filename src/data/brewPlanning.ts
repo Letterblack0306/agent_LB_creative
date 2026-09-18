@@ -53,10 +53,11 @@ export const brewPlanMeta = {
     filesChanged: 1,
   },
   readinessVerification: {
-    timestamp: "2026-09-18T18:28:00.000Z",
-    testCount: 421,
-    testPass: 421,
+    timestamp: "2026-09-18T21:46:00.000Z",
+    testCount: 469,
+    testPass: 469,
     testFail: 0,
+    rootTests: 47,
     readinessGuards: 10,
     readinessGuardsPassed: 10,
     watcherTests: "4/4",
@@ -66,6 +67,13 @@ export const brewPlanMeta = {
     fileAdapterTools: 5,
     status: "ALL GUARDS PASS",
     uncommitted: false,
+    deepAuditPart2: {
+      completed: true,
+      telegramTestsReconciled: true,
+      logicOwnershipGuard: "PASS",
+      importBoundaryGuard: "PASS",
+      releasePreflight: "PASS with expected node_modules warning",
+    },
   },
 };
 

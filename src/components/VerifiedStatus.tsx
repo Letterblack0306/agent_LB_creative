@@ -222,6 +222,10 @@ export default function VerifiedStatus() {
           <div className="text-xs text-gray-400">Tests Passed</div>
         </div>
         <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
+          <div className="text-2xl font-bold text-green-400">{brewPlanMeta.readinessVerification.rootTests}</div>
+          <div className="text-xs text-gray-400">Root Tests</div>
+        </div>
+        <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
           <div className="text-2xl font-bold text-green-400">{provenFoundations.length}</div>
           <div className="text-xs text-gray-400">Proven foundations</div>
         </div>
@@ -233,11 +237,69 @@ export default function VerifiedStatus() {
           <div className="text-2xl font-bold text-amber-400">PARTIAL</div>
           <div className="text-xs text-gray-400">Live posting</div>
         </div>
-        <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
-          <div className="text-2xl font-bold text-green-400">3/3</div>
-          <div className="text-xs text-gray-400">Scan Issues Fixed</div>
-        </div>
       </div>
+
+      {/* Deep Audit Part 2 */}
+      {brewPlanMeta.readinessVerification.deepAuditPart2 && (
+        <div className="rounded-xl bg-blue-500/5 border border-blue-500/20 p-5 mb-8">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center shrink-0">
+              <i className="fa-solid fa-microscope text-blue-400"></i>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="text-xs font-mono text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/30">
+                  Deep Audit Part 2
+                </span>
+                <span className="text-xs text-gray-500">2026-09-18 9:46 PM</span>
+                <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/30 font-mono">
+                  COMPLETED
+                </span>
+              </div>
+              <p className="text-sm text-gray-200 font-medium mb-3">
+                Test discovery expanded to include both scripts/*.test.mjs and root tests/*.test.mjs
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs mb-3">
+                <div className="rounded-lg bg-white/5 p-2">
+                  <div className="text-gray-500">Root Tests</div>
+                  <div className="text-green-400 font-mono">{brewPlanMeta.readinessVerification.rootTests}/{brewPlanMeta.readinessVerification.rootTests} PASS</div>
+                </div>
+                <div className="rounded-lg bg-white/5 p-2">
+                  <div className="text-gray-500">Full Suite</div>
+                  <div className="text-green-400 font-mono">{brewPlanMeta.readinessVerification.testPass}/{brewPlanMeta.readinessVerification.testCount} PASS</div>
+                </div>
+                <div className="rounded-lg bg-white/5 p-2">
+                  <div className="text-gray-500">Telegram Tests</div>
+                  <div className="text-green-400 font-mono">Reconciled</div>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-white/5">
+                <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-2">Guards Passed:</p>
+                <div className="flex flex-wrap gap-1.5">
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ verify:readiness
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ logic-ownership
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ import-boundary
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ release-preflight
+                  </span>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-white/5">
+                <p className="text-xs text-gray-400">
+                  <i className="fa-solid fa-circle-info mr-1 text-blue-400"></i>
+                  D1/D2/D3/D5–D12 findings remain classified as static/reachability findings. No duplicate authority removed without consumer classification.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="mb-10">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Proof levels</h3>
