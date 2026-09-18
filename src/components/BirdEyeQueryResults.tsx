@@ -165,7 +165,7 @@ export default function BirdEyeQueryResults() {
                 <span className="text-xs text-gray-300">branch: <span className="text-cyan-300 font-mono">main</span></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-300">head: <span className="text-gray-400 font-mono text-[10px]">c37205cb...</span></span>
+                <span className="text-xs text-gray-300">head: <span className="text-gray-400 font-mono text-[10px]">54673a6</span></span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-300">dirty: <span className="text-green-400">false</span></span>

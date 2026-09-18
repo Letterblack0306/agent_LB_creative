@@ -85,7 +85,7 @@ export default function DriveReconciliation() {
           </span>
         </h2>
         <p className="text-gray-400 max-w-3xl mx-auto">
-          Comparison of the 6-lane memory/autonomy roadmap from the Google Drive snapshot against current Brew <code className="text-blue-300 bg-blue-500/10 px-1.5 py-0.5 rounded text-sm">main</code> at commit <code className="text-gray-300">c37205cb</code>.
+          Comparison of the 6-lane memory/autonomy roadmap from the Google Drive snapshot against current Brew <code className="text-blue-300 bg-blue-500/10 px-1.5 py-0.5 rounded text-sm">main</code> at commit <code className="text-gray-300">54673a6</code>.
         </p>
       </div>
 
