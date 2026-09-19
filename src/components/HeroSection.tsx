@@ -42,16 +42,16 @@ export default function HeroSection() {
         </p>
 
         {/* Classification badge */}
-        <div className="inline-block px-4 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20 mb-4 max-w-2xl">
+        <div className="inline-block px-4 py-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20 mb-8 max-w-2xl">
           <div className="flex items-center gap-2 justify-center mb-1">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-xs text-emerald-300 font-mono">LATEST: 54673a6 — 8 concrete fixes • verify:readiness ALL GUARDS PASS</span>
+            <span className="text-xs text-emerald-300 font-mono">LATEST: 722fc238 — Canonical read-only Git capabilities</span>
           </div>
           <p className="text-[10px] text-gray-400 font-mono mb-1">
-            renderer cwd • CSS reset • waiting-state invariant • chat selectors • verification display • approval formatting • user interruption • semantic observation
+            git.status • git.diff_summary • shell-safe • workspace-aware • 2/2 focused tests
           </p>
           <p className="text-[10px] text-green-400 font-mono">
-            422/422 tests • 11/11 readiness guards • memory watcher fix verified
+            {brewPlanMeta.latestCommit.date} • {brewPlanMeta.readinessVerification.testPass}/{brewPlanMeta.readinessVerification.testCount} tests • {brewPlanMeta.readinessVerification.rootTests} root tests • {brewPlanMeta.readinessVerification.readinessGuardsPassed}/{brewPlanMeta.readinessVerification.readinessGuards} readiness • working tree clean
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export default function HeroSection() {
             <div className="text-[10px] text-gray-500 uppercase tracking-wider">Critical proof gaps</div>
           </div>
           <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-xl font-bold text-green-300">418</div>
+            <div className="text-xl font-bold text-green-300">{brewPlanMeta.readinessVerification.testPass}</div>
             <div className="text-[10px] text-gray-500 uppercase tracking-wider">Tests passed</div>
           </div>
           <div className="px-4 py-3 rounded-xl bg-white/5 border border-white/10">

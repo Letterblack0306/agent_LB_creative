@@ -121,7 +121,8 @@ const colorMap: Record<string, { bg: string; border: string; text: string; badge
 
 export default function UpstreamReuse() {
   const [activeRef, setActiveRef] = useState<string>("Hermes Agent");
-  const current = refs.find(r => r.name === activeRef)!;
+  const current = refs.find(r => r.name === activeRef);
+  if (!current) return <div className="text-center text-gray-500">Reference not found</div>;
   const colors = colorMap[current.color];
 
   return (

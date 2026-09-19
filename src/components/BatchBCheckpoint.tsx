@@ -2,7 +2,7 @@ import { browserAcceptance, brewPlanMeta } from "../data/brewPlanning";
 
 const evidenceRows = [
   { item: "Brew source baseline", value: brewPlanMeta.sourceShort, status: "ok" },
-  { item: "Static regression", value: "418 tests + readiness PASS", status: "ok" },
+  { item: "Static regression", value: `${brewPlanMeta.readinessVerification.testPass} tests + readiness PASS`, status: "ok" },
   { item: "Canonical relay", value: "127.0.0.1:9333 PASS", status: "ok" },
   { item: "Chrome CDP", value: "127.0.0.1:7430 PASS", status: "ok" },
   { item: "Posting invocation", value: "ATTEMPTED", status: "ok" },

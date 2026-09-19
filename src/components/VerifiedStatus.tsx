@@ -2,6 +2,36 @@ import { browserAcceptance, brewPlanMeta, provenFoundations } from "../data/brew
 
 const verifiedChanges = [
   {
+    commit: "722fc238",
+    classification: "PROVEN_SOURCE_AND_TEST",
+    change: "Add canonical read-only Git capabilities — git.status and git.diff_summary exposed through capability registry. Shell-safe, workspace/repository-aware, explicitly unavailable outside Git repos. Covered by 2/2 focused tests. Git write operations intentionally not added (require explicit governance and approval). 421/421 tests passing, 10/10 readiness guards.",
+  },
+  {
+    commit: "7a16b226",
+    classification: "PROVEN_PUSHED",
+    change: "docs: classify workspace code health — Audited and recorded results in WORKSPACE_CODE_CLASSIFICATION.md. No proven broken runtime code. 4 incomplete/quarantined files identified (fast-context.mjs, http/server.mjs, not-implemented-module.mjs, subagent-orchestrator.mjs). 3 empty files (2 .gitkeep, 1 historical archive). 178 reachable runtime files structurally clean with zero unresolved imports.",
+  },
+  {
+    commit: "3a4b1082",
+    classification: "PROVEN_PUSHED",
+    change: "Root-to-leaf workspace cleanup — Scanned all nested workspace levels, verified 178 runtime files with no unresolved imports or active legacy authorities, rebuilt runtime-ui from authoritative app/, removed 6 disposable artifacts (npm-install-cline logs, stale release-proof JSONs), corrected heartbeat doctor wording, refreshed workspace index to 1,210 files. All validation passing.",
+  },
+  {
+    commit: "dd2794df",
+    classification: "PROVEN_PUSHED",
+    change: "Fix memory guards, secret scanner false positives, and workspace state issues — Replaced debug stubs with real promotion/status endpoints, added canonical memory route aliases, rewrote stale memory guards, removed obsolete .brew-sidecar expectation, fixed secret scanner, stopped UI validation from creating forbidden .brew state. All validation passing.",
+  },
+  {
+    commit: "2cbb187d",
+    classification: "PROVEN_PUSHED",
+    change: "docs: record external PR merge boundary — Added PR warning to AGENTS.md, detailed review notes (EXTERNAL_PR_REVIEW_NOTES.md), updated workspace index and changelog. Pushed to origin/main, working tree clean.",
+  },
+  {
+    commit: "54673a6",
+    classification: "PROVEN_SOURCE_AND_TEST",
+    change: "Fixed 8 concrete issues: renderer cwd, CSS reset, waiting-state invariant, chat selectors, verification display, approval formatting, user interruption, semantic observation.",
+  },
+  {
     commit: "c37205cb",
     classification: "PROVEN_REMOTE_SOURCE",
     change: "GitHub origin/main is verified at c37205cb: build: refresh runtime UI asset reference. This does not prove a newer local workspace revision.",
@@ -26,11 +56,35 @@ const verifiedChanges = [
 const proofLevels = [
   { area: "One-agent architecture", state: "PROVEN_SOURCE", note: "Canonical source and removal history support one semantic reasoning authority." },
   { area: "Capability registry", state: "PROVEN_SOURCE", note: "Model-visible and executable tool catalogs derive from current capability ownership." },
-  { area: "Static regression", state: "PROVEN_TEST", note: "422 tests plus readiness/runtime truth/release postflight reported PASS." },
+  { area: "Static regression", state: "PROVEN_TEST", note: `${brewPlanMeta.readinessVerification.testPass} tests plus readiness/runtime truth/release postflight reported PASS.` },
   { area: "Browser relay/CDP", state: "PROVEN_LIVE", note: "Relay :9333 and Chrome CDP :7430 were both reachable in the latest acceptance run." },
   { area: "ChatGPT posting", state: "PARTIAL", note: browserAcceptance.blocker },
   { area: "Restart/exactly-once", state: "NOT_PROVEN", note: "Checkpoint primitives exist; process-loss rediscovery/revalidation/non-duplication remains an acceptance obligation." },
   { area: "Installed runtime identity", state: "NOT_PROVEN", note: "Needs exact source -> deployed build -> live runtime identity and restart proof." },
+];
+
+const workspaceScanIssues = [
+  {
+    id: "memory-guards-stale",
+    severity: "RESOLVED",
+    title: "Memory guards rewritten",
+    detail: "Three memory validation scripts (validate-memory-promotion.mjs, guard-memory-chat.mjs, guard-memory-leakage.mjs) were referencing the removed legacy file brew/start.js. All three have been rewritten to reference current gateway/orchestrator authorities.",
+    action: "✅ Fixed in dd2794df — Memory guards now reference brew/agent/orchestrator-server.mjs and brew/runtime/server/gateway-server.mjs",
+  },
+  {
+    id: "memory-sidecar-obsolete",
+    severity: "RESOLVED",
+    title: "Memory sidecar expectation removed",
+    detail: "validate-memory-promotion.mjs was expecting .brew-sidecar/memory-marks/ which conflicted with the current external state-root design under ~/.Brew/state.",
+    action: "✅ Fixed in dd2794df — Obsolete .brew-sidecar/memory-marks expectation removed",
+  },
+  {
+    id: "secret-scanner-false-positives",
+    severity: "RESOLVED",
+    title: "Secret scanner false positives fixed",
+    detail: "scan-secret-risk.mjs was flagging test fixtures such as token: 'active-claim-secret' and apiKey: 'sk-secret-value-1234567890' as real secrets.",
+    action: "✅ Fixed in dd2794df — Secret scanner now correctly classifies test fixtures",
+  },
 ];
 
 const stateClass: Record<string, string> = {
@@ -114,7 +168,7 @@ export default function VerifiedStatus() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
               <div className="rounded-lg bg-white/5 p-2">
                 <div className="text-gray-500">Test Suite</div>
-                <div className="text-green-400 font-mono">422/422</div>
+                <div className="text-green-400 font-mono">{brewPlanMeta.readinessVerification.testPass}/{brewPlanMeta.readinessVerification.testCount}</div>
               </div>
               <div className="rounded-lg bg-white/5 p-2">
                 <div className="text-gray-500">Watcher Tests</div>
@@ -152,9 +206,9 @@ export default function VerifiedStatus() {
               </div>
             </div>
             <div className="mt-3 pt-3 border-t border-white/5">
-              <p className="text-xs text-amber-300">
-                <i className="fa-solid fa-triangle-exclamation mr-1"></i>
-                Status: Changes uncommitted in worktree. No deployment or release performed.
+              <p className={`text-xs ${brewPlanMeta.readinessVerification.uncommitted ? "text-amber-300" : "text-green-400"}`}>
+                <i className={`fa-solid ${brewPlanMeta.readinessVerification.uncommitted ? "fa-triangle-exclamation" : "fa-circle-check"} mr-1`}></i>
+                Status: {brewPlanMeta.readinessVerification.uncommitted ? "Changes uncommitted in worktree. No deployment or release performed." : "Working tree clean. All changes committed and pushed."}
               </p>
             </div>
           </div>
@@ -162,17 +216,21 @@ export default function VerifiedStatus() {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">
         <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
-          <div className="text-2xl font-bold text-green-400">422</div>
+          <div className="text-2xl font-bold text-green-400">{brewPlanMeta.readinessVerification.testPass}</div>
           <div className="text-xs text-gray-400">Tests Passed</div>
+        </div>
+        <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
+          <div className="text-2xl font-bold text-green-400">{brewPlanMeta.readinessVerification.rootTests}</div>
+          <div className="text-xs text-gray-400">Root Tests</div>
         </div>
         <div className="rounded-xl bg-green-500/5 border border-green-500/20 p-4 text-center">
           <div className="text-2xl font-bold text-green-400">{provenFoundations.length}</div>
           <div className="text-xs text-gray-400">Proven foundations</div>
         </div>
         <div className="rounded-xl bg-purple-500/5 border border-purple-500/20 p-4 text-center">
-          <div className="text-2xl font-bold text-purple-400">11/11</div>
+          <div className="text-2xl font-bold text-purple-400">{brewPlanMeta.readinessVerification.readinessGuardsPassed}/{brewPlanMeta.readinessVerification.readinessGuards}</div>
           <div className="text-xs text-gray-400">Readiness Guards</div>
         </div>
         <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-4 text-center">
@@ -180,6 +238,68 @@ export default function VerifiedStatus() {
           <div className="text-xs text-gray-400">Live posting</div>
         </div>
       </div>
+
+      {/* Deep Audit Part 2 */}
+      {brewPlanMeta.readinessVerification.deepAuditPart2 && (
+        <div className="rounded-xl bg-blue-500/5 border border-blue-500/20 p-5 mb-8">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center shrink-0">
+              <i className="fa-solid fa-microscope text-blue-400"></i>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="text-xs font-mono text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/30">
+                  Deep Audit Part 2
+                </span>
+                <span className="text-xs text-gray-500">2026-09-18 9:46 PM</span>
+                <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/30 font-mono">
+                  COMPLETED
+                </span>
+              </div>
+              <p className="text-sm text-gray-200 font-medium mb-3">
+                Test discovery expanded to include both scripts/*.test.mjs and root tests/*.test.mjs
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs mb-3">
+                <div className="rounded-lg bg-white/5 p-2">
+                  <div className="text-gray-500">Root Tests</div>
+                  <div className="text-green-400 font-mono">{brewPlanMeta.readinessVerification.rootTests}/{brewPlanMeta.readinessVerification.rootTests} PASS</div>
+                </div>
+                <div className="rounded-lg bg-white/5 p-2">
+                  <div className="text-gray-500">Full Suite</div>
+                  <div className="text-green-400 font-mono">{brewPlanMeta.readinessVerification.testPass}/{brewPlanMeta.readinessVerification.testCount} PASS</div>
+                </div>
+                <div className="rounded-lg bg-white/5 p-2">
+                  <div className="text-gray-500">Telegram Tests</div>
+                  <div className="text-green-400 font-mono">Reconciled</div>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-white/5">
+                <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-2">Guards Passed:</p>
+                <div className="flex flex-wrap gap-1.5">
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ verify:readiness
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ logic-ownership
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ import-boundary
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-green-500/10 text-green-300 border border-green-500/20 font-mono">
+                    ✓ release-preflight
+                  </span>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-white/5">
+                <p className="text-xs text-gray-400">
+                  <i className="fa-solid fa-circle-info mr-1 text-blue-400"></i>
+                  D1/D2/D3/D5–D12 findings remain classified as static/reachability findings. No duplicate authority removed without consumer classification.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="mb-10">
         <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Proof levels</h3>
@@ -206,6 +326,28 @@ export default function VerifiedStatus() {
                 <span className={`text-[10px] px-2 py-0.5 rounded border font-mono ${stateClass[item.status]}`}>{item.status}</span>
               </div>
               <p className="text-xs text-gray-500 leading-relaxed">{item.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Workspace Scan Issues - Now Resolved */}
+      <div className="mt-10 mb-8">
+        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Workspace Scan Issues — Resolved (2026-09-18)</h3>
+        <div className="space-y-3">
+          {workspaceScanIssues.map((issue) => (
+            <div key={issue.id} className="rounded-xl bg-green-500/5 border border-green-500/20 p-4">
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <h4 className="text-sm font-medium text-gray-200">{issue.title}</h4>
+                <span className="text-[10px] px-2 py-0.5 rounded border font-mono bg-green-500/10 text-green-400 border-green-500/30">
+                  {issue.severity}
+                </span>
+              </div>
+              <p className="text-xs text-gray-400 mb-2">{issue.detail}</p>
+              <p className="text-xs text-emerald-400">
+                <i className="fa-solid fa-check-circle mr-1"></i>
+                {issue.action}
+              </p>
             </div>
           ))}
         </div>

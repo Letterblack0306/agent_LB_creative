@@ -11,9 +11,13 @@ import BirdEyeSection from "./components/BirdEyeSection";
 import BirdEyeQueryResults from "./components/BirdEyeQueryResults";
 import HeroSection from "./components/HeroSection";
 import UIConcepts from "./components/UIConcepts";
+import BrewUI from "./components/BrewUI";
+import ArchitectureClarification from "./components/ArchitectureClarification";
+import HistoricalIssues from "./components/HistoricalIssues";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { brewPlanMeta } from "./data/brewPlanning";
 
-type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b" | "ui-concepts";
+type Section = "overview" | "plan" | "status" | "drive" | "gaps" | "birdeye" | "birdeye-query" | "drift" | "upstream" | "invariants" | "batch-b" | "ui-concepts" | "brew-ui" | "architecture-clarification" | "historical-issues";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>("overview");
@@ -29,6 +33,8 @@ export default function App() {
     { id: "overview", label: "Overview", icon: "fa-compass" },
     { id: "plan", label: "Specific Plan", icon: "fa-diagram-project" },
     { id: "status", label: "Verified Status", icon: "fa-circle-check" },
+    { id: "architecture-clarification", label: "Architecture Decision", icon: "fa-lightbulb" },
+    { id: "historical-issues", label: "Historical Issues", icon: "fa-clock-rotate-left" },
     { id: "drive", label: "Drive Reconciliation", icon: "fa-folder-open" },
     { id: "gaps", label: "Gaps & Gates", icon: "fa-triangle-exclamation" },
     { id: "birdeye", label: "BirdEye MCP", icon: "fa-eye" },
@@ -38,9 +44,11 @@ export default function App() {
     { id: "invariants", label: "Invariants", icon: "fa-shield-halved" },
     { id: "batch-b", label: "Batch B", icon: "fa-flask" },
     { id: "ui-concepts", label: "UI Concepts", icon: "fa-wand-magic-sparkles" },
+    { id: "brew-ui", label: "Brew UI", icon: "fa-mug-hot" },
   ];
 
   return (
+    <ErrorBoundary>
     <div className="min-h-screen bg-[#0a0e1a] text-gray-100 font-sans">
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -87,6 +95,8 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <section id="plan" className="pt-24"><PlanGraph /></section>
         <section id="status" className="pt-24"><VerifiedStatus /></section>
+        <section id="architecture-clarification" className="pt-24"><ArchitectureClarification /></section>
+        <section id="historical-issues" className="pt-24"><HistoricalIssues /></section>
         <section id="drive" className="pt-24"><DriveReconciliation /></section>
         <section id="gaps" className="pt-24"><GenuineGaps /></section>
         <section id="birdeye" className="pt-24"><BirdEyeSection /></section>
@@ -96,17 +106,19 @@ export default function App() {
         <section id="invariants" className="pt-24"><Invariants /></section>
         <section id="batch-b" className="pt-24"><BatchBCheckpoint /></section>
         <section id="ui-concepts" className="pt-24"><UIConcepts /></section>
+        <section id="brew-ui" className="pt-24"><BrewUI /></section>
       </main>
 
       <footer className="border-t border-white/5 py-8 text-center text-gray-500 text-sm">
         <p>Brew Agent System — Plan & Implementation Features</p>
         <p className="mt-1 text-gray-600">
-          Source: Letterblack0306/GPT-Knowledge • Brew main at 54673a6 (8 fixes) • 422/422 tests • verify:readiness ALL GUARDS PASS
+          Source: Letterblack0306/GPT-Knowledge • Brew main at 722fc238 (canonical read-only Git capabilities) • 421/421 tests • 10/10 readiness guards
         </p>
         <p className="mt-1 text-gray-600 text-xs">
-          Last verified: 2026-09-18T00:32:45Z • Changes uncommitted in worktree
+          Last verified: 2026-09-18 6:28 PM • Working tree clean • Pushed to origin/main
         </p>
       </footer>
     </div>
+    </ErrorBoundary>
   );
 }
